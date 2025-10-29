@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Команда разработчиков сайта</title>
+
+  <style>
+    /* Базовые стили — совпадают со стилем index.html */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Inconsolata', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      color: white;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:2rem;
+    }
+
+    .container { max-width:1100px; width:100%; }
+    header { text-align:center; margin-bottom:1.5rem; }
+    h1 { font-size:2.5rem; margin-bottom:0.25rem; text-shadow:2px 2px 4px rgba(0,0,0,.4); }
+    .subtitle { font-size:1rem; opacity:.95; margin-bottom:1rem; }
+
+    /* Карточки и медиа */
+    .media { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:start; }
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius:12px;
+      padding:1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      text-align:center;
+      backdrop-filter: blur(6px);
+    }
+    .card strong { display:block; margin-bottom:.6rem; font-size:1.05rem; }
+
+    video, img {
+      width:100%;
+      height:auto;
+      border-radius:8px;
+      display:block;
+      background:#000;
+    }
+
+    .note { opacity:.95; font-size:.95rem; margin-top:.6rem; color:rgba(255,255,255,0.9); }
+
+    /* Кнопки — как на главной */
+    .buttons-container { display:flex; justify-content:center; gap:1rem; margin-top:1.25rem; flex-wrap:wrap; }
+    .nav-button {
+      display:inline-block;
+      text-decoration:none;
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.18);
+      border-radius:10px;
+      padding:.8rem 1.1rem;
+      color:white;
+      font-size:1rem;
+      cursor:pointer;
+      transition: all .25s ease;
+      min-width:160px;
+      text-align:center;
+      line-height:1;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+    .nav-button:hover { transform: translateY(-4px); background: rgba(255,255,255,0.14); }
+
+    footer { margin-top:2.5rem; font-size:.9rem; opacity:.95; color:#fff; }
+    .footer-content { display:flex; gap:2rem; justify-content:space-between; flex-wrap:wrap; margin-bottom:1rem; }
+    .footer-section { min-width:200px; text-align:left; }
+    .footer-section h3{ margin-bottom:.5rem; font-size:1rem; }
+    .footer-section ul{ list-style:none; padding-left:0; font-size:.95rem; opacity:.95; }
+    .footer-section a{ color:rgba(255,255,255,.9); text-decoration:none; }
+    .copyright{ text-align:center; opacity:.9; }
+
+    /* Новые стили для команды */
+    .team-description {
+      max-width: 800px;
+      margin: 2rem auto;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .team-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stat strong {
+      font-size: 2.5rem;
+      color: #fdbb2d;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat span {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .team-members {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .member-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .member-avatar {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .member-card h3 {
+      color: #fdbb2d;
+      margin-bottom: 0.5rem;
+    }
+
+    .member-card p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    .project-note {
+      background: rgba(255,255,255,0.05);
+      border-left: 3px solid #fdbb2d;
+      padding: 1rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin-top: 2rem;
+    }
+
+    .project-note p {
+      font-style: italic;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 900px) { 
+      .media { grid-template-columns:1fr; } 
+      h1{ font-size:1.8rem; } 
+    }
+    
+    @media (max-width: 768px) {
+      .team-stats {
+        gap: 2rem;
+      }
+      
+      .stat strong {
+        font-size: 2rem;
+      }
+      
+      .team-members {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width:480px) {
+      .nav-button { min-width:140px; padding:.7rem .8rem; font-size:.95rem; }
+    }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Команда разработчиков</h1>
+      <p class="subtitle">Студенческий проект по исследованию замкнутого ядерного цикла</p>
+    </header>
+
+    <div class="team-description">
+      <p>Мы - группа из трех студентов, объединенных интересом к современной атомной энергетике и новым технологиям. В рамках учебного проекта мы изучаем принципы работы замкнутого ядерного цикла и представляем наш взгляд на будущее энергетики.</p>
+      
+      <div class="team-stats">
+        <div class="stat">
+          <strong>3</strong>
+          <span>Студента</span>
+        </div>
+        <div class="stat">
+          <strong>1</strong>
+          <span>Учебный проект</span>
+        </div>
+        <div class="stat">
+          <strong>∞</strong>
+          <span>Энтузиазма</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="team-members">
+      <div class="member-card">
+        <div class="member-avatar">👨‍🔬</div>
+        <h3>Руководитель проекта</h3>
+        <p>Координация работы, исследование технологий переработки</p>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">👨‍🔬</div>
+        <h3>Руководитель проекта</h3>
+        <p>Координация работы, исследование технологий переработки</p>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">👩‍💻</div>
+        <h3>Разработчик моделей</h3>
+        <p>Создание 3D моделей и визуализация процессов</p>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">👨‍🎓</div>
+        <h3>Аналитик</h3>
+        <p>Сбор информации, анализ данных, подготовка материалов</p>
+      </div>
+    </div>
+
+    <div class="project-note">
+      <p>Этот проект создан в образовательных целях для демонстрации возможностей замкнутого ядерного цикла и технологий будущего.</p>
+    </div>
+
+    <div class="buttons-container" style="margin-top:1.5rem;">
+      <a class="nav-button" href="index.html" target="_self" rel="noopener">Вернуться на главную</a>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Контакты</h3>
+          <ul>
+            <li>✉️ Email: <a href="mailto:info@gmail.com">info@gmail.com</a></li>
+            <li>📞 Телефон: <a href="tel:+70000000000">8 (000) 000-00-00</a></li>
+            <li>📍 Адрес: г. Кемеров, ул. Весення, 28</li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>О проекте</h3>
+          <ul>
+            <li><a href="about.html">О проекте</a></li>
+            <li><a href="research.html">Исследования</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Полезные ссылки</h3>
+          <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="technology.html">Технологии</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>© 2025 Проект "Прорыв". Все права защищены.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
