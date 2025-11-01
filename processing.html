@@ -1,149 +1,76 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Анимация процесса переработки</title>
-  <style>
-    /* Базовые стили — совпадают со стилем index.html */
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Inconsolata', Tahoma, Geneva, Verdana, sans-serif; }
-    body {
-      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-      color: white;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      padding:2rem;
-    }
-
-    .container { max-width:1100px; width:100%; }
-    header { text-align:center; margin-bottom:1.5rem; }
-    h1 { font-size:2.5rem; margin-bottom:0.25rem; text-shadow:2px 2px 4px rgba(0,0,0,.4); }
-    .subtitle { font-size:1rem; opacity:.95; margin-bottom:1rem; }
-
-    /* Карточки и медиа */
-    .media { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:start; }
-    .card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius:12px;
-      padding:1rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-      text-align:center;
-      backdrop-filter: blur(6px);
-    }
-    .card strong { display:block; margin-bottom:.6rem; font-size:1.05rem; }
-
-    video, img {
-      width:100%;
-      height:auto;
-      border-radius:8px;
-      display:block;
-      background:#000;
-    }
-
-    .note { opacity:.95; font-size:.95rem; margin-top:.6rem; color:rgba(255,255,255,0.9); }
-
-    /* Кнопки — как на главной */
-    .buttons-container { display:flex; justify-content:center; gap:1rem; margin-top:1.25rem; flex-wrap:wrap; }
-    .nav-button {
-      display:inline-block;
-      text-decoration:none;
-      background: rgba(255,255,255,0.08);
-      border: 2px solid rgba(255,255,255,0.18);
-      border-radius:10px;
-      padding:.8rem 1.1rem;
-      color:white;
-      font-size:1rem;
-      cursor:pointer;
-      transition: all .25s ease;
-      min-width:160px;
-      text-align:center;
-      line-height:1;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    }
-    .nav-button:hover { transform: translateY(-4px); background: rgba(255,255,255,0.14); }
-
-    footer { margin-top:2.5rem; font-size:.9rem; opacity:.95; color:#fff; }
-    .footer-content { display:flex; gap:2rem; justify-content:space-between; flex-wrap:wrap; margin-bottom:1rem; }
-    .footer-section { min-width:200px; text-align:left; }
-    .footer-section h3{ margin-bottom:.5rem; font-size:1rem; }
-    .footer-section ul{ list-style:none; padding-left:0; font-size:.95rem; opacity:.95; }
-    .footer-section a{ color:rgba(255,255,255,.9); text-decoration:none; }
-    .copyright{ text-align:center; opacity:.9; }
-
-    @media (max-width:900px) { .media { grid-template-columns:1fr; } h1{ font-size:1.8rem; } }
-    @media (max-width:480px) {
-      .nav-button { min-width:140px; padding:.7rem .8rem; font-size:.95rem; }
-    }
-  </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Анимация процесса переработки</title>
+    <link rel="stylesheet" href="css/animation.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Анимация процесса переработки</h1>
-      <p class="subtitle">Видео и GIF — ключевые этапы переработки топлива</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>Анимация процесса переработки</h1>
+            <p class="subtitle">Видео и GIF — ключевые этапы переработки топлива</p>
+        </header>
 
-    <main class="media">
-      <section class="card" aria-label="Видео-обзор процесса">
-        <strong>Видео — обзор процесса</strong>
-        <video id="processVideo" controls playsinline preload="metadata" poster="">
-          <source src="assets/snyp.mp4" type="video/mp4">
-          Ваш браузер не поддерживает видео.
-        </video>
-        <div class="note">Нажмите «▶» для воспроизведения. Процесс преобразования Урана и Плутония в СНУП-топливо.</div>
-      </section>
+        <main class="media">
+            <section class="card" aria-label="Видео-обзор процесса">
+                <strong>Видео — обзор процесса</strong>
+                <video id="processVideo" controls playsinline preload="metadata" poster="">
+                    <source src="assets/snyp.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает видео.
+                </video>
+                <div class="note">Нажмите «▶» для воспроизведения. Если видео не загружается — убедитесь, что файл <code>assets/snyp.mp4</code> находится в папке <code>assets/</code>.</div>
+            </section>
 
-      <section class="card" aria-label="GIF-ключевые этапы">
-        <strong>GIF — ключевые этапы</strong>
-        <img src="assets/process.gif" alt="Анимация процесса переработки">
-        <div class="note">Наглядный процесс замкнутной ядерной экосистемы.</div>
-      </section>
-    </main>
+            <section class="card" aria-label="GIF-ключевые этапы">
+                <strong>GIF — ключевые этапы</strong>
+                <img src="assets/process.gif" alt="Анимация процесса переработки">
+                <div class="note">Наглядный процесс замкнутой ядерной экосистемы.</div>
+            </section>
+        </main>
 
-    <div class="buttons-container" style="margin-top:1.5rem;">
-      <a class="nav-button" href="index.html" target="_self" rel="noopener">Вернуться на главную</a>
+        <div class="buttons-container" style="margin-top:1.5rem;">
+            <a class="nav-button" href="index.html" target="_self" rel="noopener">Вернуться на главную</a>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>✉️ Email: <a href="mailto:info@gmail.com">info@gmail.com</a></li>
+                        <li>📞 Телефон: <a href="tel:+70000000000">8 (000) 000-00-00</a></li>
+                        <li>📍 Адрес: г. Кемеров, ул. Весення, 28</li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>О проекте</h3>
+                    <ul>
+                        <li><a href="about.html">О проекте</a></li>
+                        <li><a href="research.html">Исследования</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Полезные ссылки</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="technology.html">Технологии</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>© 2025 Проект "Прорыв". Все права защищены.</p>
+            </div>
+        </footer>
     </div>
 
-    <footer>
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>Контакты</h3>
-          <ul>
-            <li>✉️ Email: <a href="mailto:info@gmail.com">info@gmail.com</a></li>
-            <li>📞 Телефон: <a href="tel:+70000000000">8 (000) 000-00-00</a></li>
-            <li>📍 Адрес: г. Кемеров, ул. Весення, 28</li>
-          </ul>
-        </div>
-
-        <div class="footer-section">
-          <h3>О проекте</h3>
-          <ul>
-            <li><a href="about.html">О проекте</a></li>
-            <li><a href="research.html">Исследования</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-section">
-          <h3>Полезные ссылки</h3>
-          <ul>
-            <li><a href="index.html">Главная</a></li>
-            <li><a href="technology.html">Технологии</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="copyright">
-        <p>© 2025 Проект "Прорыв". Все права защищены.</p>
-      </div>
-    </footer>
-  </div>
-
-  <script>
-    // если хотите автостарт (может быть заблокирован браузером):
-    // document.getElementById('processVideo').play().catch(()=>{/* автоплей заблокирован */});
-  </script>
+    <script>
+        // если хотите автостарт (может быть заблокирован браузером):
+        // document.getElementById('processVideo').play().catch(()=>{/* автоплей заблокирован */});
+    </script>
 </body>
 </html>

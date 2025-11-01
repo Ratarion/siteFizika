@@ -1,133 +1,256 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>3D Модель реактора</title>
-  <style>
-    /* Базовые стили — совпадают со стилем index.html */
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Inconsolata', Tahoma, Geneva, Verdana, sans-serif; }
-    body {
-      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-      color: white;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      padding:2rem;
-    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>3D Модель реактора</title>
+    <link rel="stylesheet" href="css/reactor-styles.css">
 
-    .container { max-width:1100px; width:100%; }
-    header { text-align:center; margin-bottom:1.5rem; }
-    h1 { font-size:2.5rem; margin-bottom:0.25rem; text-shadow:2px 2px 4px rgba(0,0,0,.4); }
-    .subtitle { font-size:1rem; opacity:.95; margin-bottom:1rem; }
+    <!-- model-viewer (module) -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer@1.13.4/dist/model-viewer.min.js"></script>
+    <!-- three.js + loaders -->
+    <script src="https://unpkg.com/three@0.164.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.164.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/three@0.164.0/examples/js/loaders/GLTFLoader.js"></script>
 
-    /* Карточки и медиа */
-    .media { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:start; }
-    .card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius:12px;
-      padding:1rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-      text-align:center;
-      backdrop-filter: blur(6px);
-    }
-    .card strong { display:block; margin-bottom:.6rem; font-size:1.05rem; }
-
-    video, img {
-      width:100%;
-      height:auto;
-      border-radius:8px;
-      display:block;
-      background:#000;
-    }
-
-    .note { opacity:.95; font-size:.95rem; margin-top:.6rem; color:rgba(255,255,255,0.9); }
-
-    /* Кнопки — как на главной */
-    .buttons-container { display:flex; justify-content:center; gap:1rem; margin-top:1.25rem; flex-wrap:wrap; }
-    .nav-button {
-      display:inline-block;
-      text-decoration:none;
-      background: rgba(255,255,255,0.08);
-      border: 2px solid rgba(255,255,255,0.18);
-      border-radius:10px;
-      padding:.8rem 1.1rem;
-      color:white;
-      font-size:1rem;
-      cursor:pointer;
-      transition: all .25s ease;
-      min-width:160px;
-      text-align:center;
-      line-height:1;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    }
-    .nav-button:hover { transform: translateY(-4px); background: rgba(255,255,255,0.14); }
-
-    footer { margin-top:2.5rem; font-size:.9rem; opacity:.95; color:#fff; }
-    .footer-content { display:flex; gap:2rem; justify-content:space-between; flex-wrap:wrap; margin-bottom:1rem; }
-    .footer-section { min-width:200px; text-align:left; }
-    .footer-section h3{ margin-bottom:.5rem; font-size:1rem; }
-    .footer-section ul{ list-style:none; padding-left:0; font-size:.95rem; opacity:.95; }
-    .footer-section a{ color:rgba(255,255,255,.9); text-decoration:none; }
-    .copyright{ text-align:center; opacity:.9; }
-
-    @media (max-width:900px) { .media { grid-template-columns:1fr; } h1{ font-size:1.8rem; } }
-    @media (max-width:480px) {
-      .nav-button { min-width:140px; padding:.7rem .8rem; font-size:.95rem; }
-    }
-  </style>
+    <style>
+      /* Минимальные локальные уточнения (не трогают ваш основной CSS) */
+      .viewer-toggle { display:flex; gap:10px; margin-top:12px; }
+      .viewer-toggle .btn { padding:8px 12px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer; text-decoration:none; color:inherit; }
+      .viewer-toggle .btn.active { background:#007bff; color:#fff; border-color:#007bff; }
+      /* Поддержка контейнера three.js */
+      #threejs-container { width:100%; height:500px; border-radius:8px; overflow:hidden; background:transparent; display:none; }
+      /* Поддержка model-viewer - делаем его блоком внутри контейнера */
+      model-viewer { display:block; width:100%; height:500px; border-radius:8px; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>3D Модель реактора</h1>
-      <p class="subtitle">Заглушка</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>3D Модель реактора</h1>
+            <p class="subtitle">Интерактивный 3D-просмотр</p>
+        </header>
 
+        <div class="buttons-container" style="margin-top:1.5rem;">
+            <a class="nav-button" href="index.html" target="_self" rel="noopener">Вернуться на главную</a>
+            <!-- Переключатель просмотра -->
+            <div class="viewer-toggle" style="margin-left:12px; display:inline-flex; vertical-align:middle;">
+                <button id="btn-modelviewer" class="btn active" type="button">Model-Viewer</button>
+                <button id="btn-threejs" class="btn" type="button">Three.js</button>
+            </div>
+        </div>
 
-    <div class="buttons-container" style="margin-top:1.5rem;">
-      <a class="nav-button" href="index.html" target="_self" rel="noopener">Вернуться на главную</a>
+        <main class="media" style="grid-template-columns: 1fr; margin-top:16px;">
+            <section class="card" aria-label="3D модель реактора">
+                <strong>Модель реактора БРЕСТ-ОД-300</strong>
+
+                <!-- model-viewer (по умолчанию показан) -->
+                <div id="modelviewer-wrapper">
+                  <model-viewer 
+                    id="mv"
+                    src="assets/Новая папка/scene.gltf" 
+                    alt="3D модель ядерного реактора"
+                    auto-rotate
+                    camera-controls
+                    shadow-intensity="1"
+                    exposure="1"
+                    ar
+                    ></model-viewer>
+                </div>
+
+                <!-- three.js canvas контейнер (скрыт по умолчанию) -->
+                <div id="threejs-container" aria-hidden="true"></div>
+
+                <div class="note" id="viewer-note">Используйте мышь (или палец на телефоне) для вращения и масштабирования модели.</div>
+                <div class="note" id="status" style="margin-top:8px; font-size:0.9em; color:#444;">Статус: ожидаю загрузки модели...</div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>✉️ Email: <a href="mailto:info@gmail.com">info@gmail.com</a></li>
+                        <li>📞 Телефон: <a href="tel:+70000000000">8 (000) 000-00-00</a></li>
+                        <li>📍 Адрес: г. Кемеров, ул. Весення, 28</li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>О проекте</h3>
+                    <ul>
+                        <li><a href="about.html">О проекте</a></li>
+                        <li><a href="research.html">Исследования</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Полезные ссылки</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="technology.html">Технологии</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>© 2025 Проект "Прорыв". Все права защищены.</p>
+            </div>
+        </footer>
     </div>
 
-    <footer>
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>Контакты</h3>
-          <ul>
-            <li>✉️ Email: <a href="mailto:info@gmail.com">info@gmail.com</a></li>
-            <li>📞 Телефон: <a href="tel:+70000000000">8 (000) 000-00-00</a></li>
-            <li>📍 Адрес: г. Кемеров, ул. Весення, 28</li>
-          </ul>
-        </div>
+    <script>
+      // Переключатель между model-viewer и three.js
+      const btnMV = document.getElementById('btn-modelviewer');
+      const btnThree = document.getElementById('btn-threejs');
+      const mvWrapper = document.getElementById('modelviewer-wrapper');
+      const threeWrapper = document.getElementById('threejs-container');
+      const statusEl = document.getElementById('status');
 
-        <div class="footer-section">
-          <h3>О проекте</h3>
-          <ul>
-            <li><a href="about.html">О проекте</a></li>
-            <li><a href="research.html">Исследования</a></li>
-          </ul>
-        </div>
+      btnMV.addEventListener('click', () => {
+        btnMV.classList.add('active'); btnThree.classList.remove('active');
+        mvWrapper.style.display = ''; threeWrapper.style.display = 'none';
+        threeWrapper.setAttribute('aria-hidden', 'true');
+        statusEl.textContent = 'Статус: показан model-viewer.';
+      });
 
-        <div class="footer-section">
-          <h3>Полезные ссылки</h3>
-          <ul>
-            <li><a href="index.html">Главная</a></li>
-            <li><a href="technology.html">Технологии</a></li>
-          </ul>
-        </div>
-      </div>
+      btnThree.addEventListener('click', () => {
+        btnThree.classList.add('active'); btnMV.classList.remove('active');
+        mvWrapper.style.display = 'none'; threeWrapper.style.display = '';
+        threeWrapper.setAttribute('aria-hidden', 'false');
+        statusEl.textContent = 'Статус: инициализация three.js...';
+        // Инициализируем three.js один раз при первом открытии
+        if (!window._threeInitialized) initThreeJS();
+      });
 
-      <div class="copyright">
-        <p>© 2025 Проект "Прорыв". Все права защищены.</p>
-      </div>
-    </footer>
-  </div>
+      /* ========== Three.js viewer ========== */
+      function initThreeJS() {
+        window._threeInitialized = true;
+        const container = document.getElementById('threejs-container');
+        // Сцена и камера
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 1.5, 4);
 
-  <script>
-    // если хотите автостарт (может быть заблокирован браузером):
-    // document.getElementById('processVideo').play().catch(()=>{/* автоплей заблокирован */});
-  </script>
+        // Рендерер
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio || 1);
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0x000000, 0); // прозрачный фон
+        container.appendChild(renderer.domElement);
+
+        // Контролы
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.07;
+
+        // Свет
+        const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambient);
+        const pLight = new THREE.PointLight(0xffffff, 1);
+        pLight.position.set(2, 3, 2);
+        scene.add(pLight);
+        // helper (можно отключить)
+        const helper = new THREE.PointLightHelper(pLight, 0.2);
+        scene.add(helper);
+
+        // GLTFLoader
+        const loader = new THREE.GLTFLoader();
+        const MODEL_PATH = 'assets/Новая папка/scene.gltf';
+        let model = null;
+
+        loader.load(
+          MODEL_PATH,
+          function(gltf) {
+            model = gltf.scene;
+            scene.add(model);
+
+            // Центрирование и подгонка камеры
+            const box = new THREE.Box3().setFromObject(model);
+            const size = box.getSize(new THREE.Vector3());
+            const center = box.getCenter(new THREE.Vector3());
+            model.position.sub(center);
+
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const fitDistance = maxDim * 1.8;
+            camera.position.set(0, maxDim * 0.6, fitDistance);
+            camera.lookAt(new THREE.Vector3(0, 0, 0));
+            controls.target.set(0, 0, 0);
+            controls.update();
+
+            statusEl.textContent = 'Статус: модель загружена в three.js.';
+          },
+          function(xhr) {
+            if (xhr.lengthComputable) {
+              const percent = Math.round((xhr.loaded / xhr.total) * 100);
+              statusEl.textContent = 'Статус: загрузка модели — ' + percent + '%';
+            } else {
+              statusEl.textContent = 'Статус: загрузка модели…';
+            }
+          },
+          function(err) {
+            console.error('Ошибка загрузки модели (three.js):', err);
+            statusEl.textContent = 'Статус: ошибка при загрузке модели (см. консоль).';
+            statusEl.style.color = '#b00020';
+          }
+        );
+
+        // Анимация
+        function animate() {
+          requestAnimationFrame(animate);
+          if (model) model.rotation.y += 0.005;
+          controls.update();
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        // Ресайз
+        window.addEventListener('resize', () => {
+          const w = container.clientWidth;
+          const h = container.clientHeight;
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
+        });
+
+        // Проверка WebGL
+        if (!renderer.capabilities.isWebGL2 && !window.WebGLRenderingContext) {
+          statusEl.textContent = 'Статус: ваш браузер/устройство не поддерживает WebGL.';
+          statusEl.style.color = '#b00020';
+        }
+      }
+
+      /* ========== Диагностика model-viewer ========== */
+      const mvEl = document.getElementById('mv');
+      mvEl.addEventListener('load', () => {
+        statusEl.textContent = 'Статус: модель загружена в model-viewer.';
+        statusEl.style.color = '#222';
+      });
+      mvEl.addEventListener('error', (e) => {
+        console.error('model-viewer error', e);
+        statusEl.textContent = 'Статус: ошибка model-viewer (см. консоль).';
+        statusEl.style.color = '#b00020';
+      });
+
+      // Проверка наличия файла (через fetch) — полезная быстрая диагностика (не влияет на CORS)
+      (function checkModelExists() {
+        fetch('assets/reactor.glb', { method: 'HEAD' })
+          .then(resp => {
+            if (!resp.ok) {
+              statusEl.textContent = 'Статус: модель не найдена (HTTP ' + resp.status + '). Проверьте путь assets/reactor.glb';
+              statusEl.style.color = '#b00020';
+            } else {
+              // ничего менять не нужно
+            }
+          })
+          .catch(err => {
+            // fetch может провалиться если запускаете file:// — предупреждаем
+            statusEl.textContent = 'Статус: не удалось проверить файл. Убедитесь, что вы запустили страницу через HTTP (локальный сервер), а не file://';
+            statusEl.style.color = '#b00020';
+            console.warn('Проверка файла failed:', err);
+          });
+      })();
+    </script>
 </body>
 </html>
