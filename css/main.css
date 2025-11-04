@@ -1,37 +1,23 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inconsolata', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-    color: white;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-}
-
-.container {
+/* ===============================================
+ * СТИЛИ ДЛЯ ГЛАВНОЙ СТРАНИЦЫ (index.html)
+ * =============================================== */
+.container.index-page {
     max-width: 1200px;
     width: 100%;
     text-align: center;
 }
 
-header {
+.index-page header {
     margin-bottom: 3rem;
 }
 
-h1 {
+.index-page h1 {
     font-size: 3.5rem;
     margin-bottom: 1rem;
     text-shadow: 2px 2px 4px rgba(0,0,0,.5);
 }
 
-.subtitle {
+.index-page .subtitle {
     font-size: 1.5rem;
     margin-bottom: .5rem;
     font-weight: 300;
@@ -44,7 +30,7 @@ h1 {
     opacity: .8;
 }
 
-.buttons-container {
+.index-page .buttons-container {
     display: flex;
     justify-content: center;
     gap: 2rem;
@@ -52,7 +38,7 @@ h1 {
     flex-wrap: wrap;
 }
 
-.nav-button {
+.index-page .nav-button {
     display: inline-block;
     text-decoration: none;
     background: rgba(255,255,255,0.1);
@@ -70,12 +56,13 @@ h1 {
     line-height: 1;
 }
 
-    .nav-button:hover {
+    .index-page .nav-button:hover {
         background: rgba(255,255,255,0.2);
         transform: translateY(-5px);
         box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     }
 
+/* Анимация атома */
 .animation-area {
     width: 100%;
     height: 300px;
@@ -89,175 +76,242 @@ h1 {
     position: relative;
 }
 
+/* ===============================================
+ * НОВАЯ АНИМАЦИЯ АТОМА (адаптировано)
+ * =============================================== */
+
 .atom {
-    width: 150px;
-    height: 150px;
     position: relative;
+    width: 250px; 
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .nucleus {
-    width: 30px;
-    height: 30px;
-    background: #ff5252;
+    width: 50px; 
+    height: 50px;
+    /* ИЗМЕНЕНИЕ ЦВЕТА: с желтого на голубой */
+    background: radial-gradient(circle, #00ffff, #29d9d9);
+    /* ИЗМЕНЕНИЕ ТЕНИ: с желтой на голубую */
+    box-shadow: 0 0 20px #29d9d9, 0 0 40px #29d9d9, 0 0 60px #29d9d9;
     border-radius: 50%;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    box-shadow: 0 0 20px #ff5252;
+    z-index: 10;
 }
 
 .orbit {
     position: absolute;
-    border: 1px solid rgba(255,255,255,0.3);
+    border-style: solid;
+    /* ИЗМЕНЕНИЕ ЦВЕТА: с оранжевого на полупрозрачный голубой */
+    border-color: rgba(41, 217, 217, 0.3);
+    border-width: 2px;
     border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    animation: spin 5s linear infinite;
 }
 
-.orbit-1 {
-    width: 100px;
-    height: 100px;
-    animation: spin 10s linear infinite;
-}
-
-.orbit-2 {
-    width: 150px;
-    height: 150px;
-    animation: spin 15s linear infinite reverse;
-}
-
-.electron {
-    width: 10px;
-    height: 10px;
-    background: #4fc3f7;
-    border-radius: 50%;
+.orbit::before {
+    content: '';
     position: absolute;
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 0 10px #4fc3f7;
+    width: 12px; 
+    height: 12px;
+    /* ИЗМЕНЕНИЕ ЦВЕТА: с желтого на голубой */
+    background: #29d9d9;
+    border-radius: 50%;
+    /* ИЗМЕНЕНИЕ ТЕНИ: с желтой на голубую */
+    box-shadow: 0 0 10px #29d9d9;
 }
 
+/* Орбита 1 (горизонтальная эллиптическая) */
+.orbit:nth-child(1) {
+    width: 250px;
+    height: 80px; /* Эллипс */
+    animation-duration: 4s;
+}
+.orbit:nth-child(1)::before {
+    top: 10px;
+    left: 30px;
+}
+
+/* Орбита 2 (вертикальная эллиптическая) */
+.orbit:nth-child(2) {
+    width: 80px;
+    height: 250px; /* Эллипс */
+    animation-duration: 6s;
+    animation-direction: reverse;
+}
+.orbit:nth-child(2)::before {
+    top: 30px;
+    left: 10px;
+}
+
+/* Орбита 3 (круговая) */
+.orbit:nth-child(3) {
+    width: 180px;
+    height: 180px;
+    border-style: dashed;
+    animation-duration: 8s;
+}
+.orbit:nth-child(3)::before {
+    top: 20px;
+    left: 20px;
+}
+
+/* Анимация вращения орбит (новая) */
 @keyframes spin {
-    0% {
-        transform: translate(-50%,-50%) rotate(0deg);
-    }
-
-    100% {
-        transform: translate(-50%,-50%) rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-.pulse {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: rgba(255,255,255,0.5);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(.5);
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(3);
-        opacity: 0;
-    }
-}
-
-.pulse-1 {
-    top: 30%;
-    left: 25%;
-    animation-delay: 0s;
-}
-
-.pulse-2 {
-    top: 60%;
-    left: 70%;
-    animation-delay: .5s;
-}
-
-.pulse-3 {
-    top: 20%;
-    left: 70%;
-    animation-delay: 1s;
-}
-
-.pulse-4 {
-    top: 70%;
-    left: 30%;
-    animation-delay: 1.5s;
-}
-
-footer {
-    margin-top: 3rem;
-    font-size: .9rem;
-    opacity: .9;
-    color: #fff;
-}
-
-.footer-content {
-    display: flex;
-    gap: 2rem;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-}
-
-.footer-section {
-    min-width: 200px;
-    text-align: left;
-}
-
-    .footer-section h3 {
-        margin-bottom: .5rem;
-        font-size: 1rem;
-    }
-
-    .footer-section ul {
-        list-style: none;
-        padding-left: 0;
-        font-size: .95rem;
-        opacity: .95;
-    }
-
-    .footer-section a {
-        color: rgba(255,255,255,.9);
-        text-decoration: none;
-    }
-
-.copyright {
-    text-align: center;
-    opacity: .85;
-}
-
+/* Медиа-запросы для главной страницы */
 @media (max-width:768px) {
-    h1 {
+    .index-page h1 {
         font-size: 2.5rem;
     }
-
-    .buttons-container {
+    .index-page .buttons-container {
         flex-direction: column;
         align-items: center;
     }
-
-    .nav-button {
+    .index-page .nav-button {
         width: 100%;
         max-width: 300px;
     }
-
     .animation-area {
         height: 220px;
     }
-
     .footer-content {
         flex-direction: column;
         gap: 1rem;
+    }
+}
+
+
+/* ===============================================
+ * ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ ПОДСТРАНИЦ
+ * (team.html, project.html, reactor.html, etc.)
+ * =============================================== */
+
+.container.subpage {
+    max-width: 1100px;
+    width: 100%;
+}
+
+.subpage header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.subpage h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.25rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.4);
+}
+
+.subpage .subtitle {
+    font-size: 1rem;
+    opacity: .95;
+    margin-bottom: 1rem;
+}
+
+/* Общая сетка для карточек */
+.media {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* Общий стиль карточки */
+.card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    text-align: center;
+    backdrop-filter: blur(6px);
+}
+    .card strong {
+        display: block;
+        margin-bottom: .6rem;
+        font-size: 1.05rem;
+    }
+
+video, img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    background: #000;
+}
+
+.note {
+    opacity: .95;
+    font-size: .95rem;
+    margin-top: .6rem;
+    color: rgba(255,255,255,0.9);
+}
+
+/* Общий стиль кнопок */
+.subpage .buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.subpage .nav-button {
+    display: inline-block;
+    text-decoration: none;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: .8rem 1.1rem;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all .25s ease;
+    min-width: 160px;
+    text-align: center;
+    line-height: 1;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+    .subpage .nav-button:hover {
+        transform: translateY(-4px);
+        background: rgba(255,255,255,0.14);
+    }
+
+/* Общий компонент (блок с заметкой) */
+.project-note {
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid #fdbb2d;
+    padding: 1rem 1.5rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 2rem;
+    text-align: left;
+}
+    .project-note p {
+        font-style: italic;
+        opacity: 0.9;
+    }
+
+/* Медиа-запросы для подстраниц */
+@media (max-width:900px) {
+    .media {
+        grid-template-columns: 1fr;
+    }
+
+    .subpage h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width:480px) {
+    .subpage .nav-button {
+        min-width: 140px;
+        padding: .7rem .8rem;
+        font-size: .95rem;
     }
 }

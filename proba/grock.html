@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проект "Прорыв": Вечная Энергия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        :root {
+            --primary: #00d4ff;
+            --secondary: #0099cc;
+            --accent: #ff6b35;
+            --dark: #0a0e27;
+            --darker: #050811;
+            --light: #f0f4ff;
+            --text: #e0e0e0;
+            --glow: 0 0 20px rgba(0, 212, 255, 0.7);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, #1a1f3a 50%, var(--dark) 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Particles System */
+        .particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, var(--primary) 10%, transparent 50%);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particle-float 20s infinite ease-in-out;
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(0) scale(1); opacity: 0.3; }
+            50% { transform: translateY(-100vh) scale(1.5); opacity: 0.1; }
+            100% { transform: translateY(-200vh) scale(1); opacity: 0.3; }
+        }
+
+        /* Navbar with animation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+            animation: slide-down 1s ease-out;
+        }
+
+        @keyframes slide-down {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section with enhanced animations */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+            margin-top: 60px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -300px;
+            right: -300px;
+            animation: glow-float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -200px;
+            animation: glow-float-reverse 10s ease-in-out infinite;
+        }
+
+        @keyframes glow-float {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+            50% { transform: translate(50px, -50px) scale(1.2); opacity: 1; }
+        }
+
+        @keyframes glow-float-reverse {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+            50% { transform: translate(-50px, 50px) scale(1.2); opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            animation: fade-in-scale 2s ease-out;
+        }
+
+        @keyframes fade-in-scale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -2px;
+            text-shadow: var(--glow);
+            animation: text-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes text-glow {
+            from { text-shadow: 0 0 10px rgba(0, 212, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(0, 212, 255, 1); }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            animation: fade-in 2s ease-out 0.5s backwards;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--text);
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            animation: fade-in 2s ease-out 1s backwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--darker);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--glow);
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            animation: button-pulse 2s infinite;
+        }
+
+        @keyframes button-pulse {
+            0% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.7); }
+            50% { box-shadow: 0 0 40px rgba(0, 212, 255, 1); }
+            100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.7); }
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .cta-button:hover::before {
+            opacity: 1;
+            transform: rotate(45deg) translate(25%, 25%);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(0, 212, 255, 0.8);
+        }
+
+        /* Sections with reveal animations */
+        section {
+            padding: 6rem 2rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: var(--primary);
+            transition: width 0.5s ease;
+        }
+
+        section.visible h2::after {
+            width: 200px;
+        }
+
+        /* About Section with advanced atom animation */
+        #about {
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 212, 255, 0.08) 100%);
+        }
+
+        .about-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .about-text h3 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            animation: fade-in-left 1s ease-out;
+        }
+
+        @keyframes fade-in-left {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            line-height: 1.9;
+            color: var(--text);
+            animation: fade-in 1.5s ease-out 0.5s backwards;
+        }
+
+        .about-visual {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .atom-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            transform-style: preserve-3d;
+            animation: rotate-3d 20s linear infinite;
+        }
+
+        @keyframes rotate-3d {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        .nucleus {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 1), rgba(255, 107, 53, 0.8));
+            box-shadow: 0 0 80px rgba(0, 212, 255, 0.8), inset 0 0 50px rgba(255, 255, 255, 0.3);
+            animation: pulse-nucleus 2s ease-in-out infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes pulse-nucleus {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .orbit {
+            position: absolute;
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: orbit-rotate 5s linear infinite;
+        }
+
+        .orbit:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            animation-duration: 8s;
+            animation-direction: reverse;
+        }
+
+        .orbit:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            animation-duration: 6s;
+        }
+
+        .orbit:nth-child(4) {
+            width: 400px;
+            height: 400px;
+            animation-duration: 10s;
+            animation-direction: reverse;
+        }
+
+        @keyframes orbit-rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .electron {
+            width: 15px;
+            height: 15px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 20px var(--primary);
+            animation: electron-move 5s linear infinite;
+            top: 50%;
+            left: 50%;
+            --radius: 100px;
+        }
+
+        @keyframes electron-move {
+            from { transform: rotate(0deg) translateX(var(--radius)) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg); }
+        }
+
+        .electron:nth-child(odd) {
+            animation-direction: reverse;
+        }
+
+        /* Physics Section with card flip animations */
+        #physics {
+            background: linear-gradient(180deg, rgba(255, 107, 53, 0.08) 0%, transparent 100%);
+        }
+
+        .physics-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .physics-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 153, 204, 0.1) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            perspective: 1000px;
+            position: relative;
+            min-height: 250px; /* Ensure consistent height */
+        }
+
+        .physics-card:hover {
+            transform: rotateY(180deg);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.4);
+        }
+
+        .physics-card-inner {
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .physics-card:hover .physics-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .physics-card-front, .physics-card-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            padding: 2.5rem;
+            box-sizing: border-box;
+        }
+
+        .physics-card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(0, 153, 204, 0.1) 100%);
+        }
+
+        .physics-card h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .physics-card p {
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .formula {
+            background: rgba(10, 14, 39, 0.9);
+            border-left: 5px solid var(--accent);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+            border-radius: 8px;
+            overflow-x: auto;
+            animation: formula-glow 2s infinite alternate;
+        }
+
+        @keyframes formula-glow {
+            from { box-shadow: 0 0 10px rgba(0, 212, 255, 0.2); }
+            to { box-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+        }
+
+        /* Features Section with bounce animations */
+        #features {
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 153, 204, 0.08) 100%);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 3rem;
+            border-radius: 20px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            transition: all 0.4s ease;
+            animation: bounce-in 1s ease-out;
+        }
+
+        @keyframes bounce-in {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-15px) rotate(5deg);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: icon-spin 4s linear infinite;
+        }
+
+        @keyframes icon-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        /* Technology Section with animated timeline */
+        #technology {
+            background: linear-gradient(180deg, rgba(255, 107, 53, 0.08) 0%, transparent 100%);
+        }
+
+        .tech-timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            padding: 3rem 0;
+        }
+
+        .tech-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+            animation: line-grow 2s ease-out;
+        }
+
+        @keyframes line-grow {
+            from { height: 0; }
+            to { height: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .tech-timeline::before {
+                left: 40px;
+            }
+        }
+
+        .tech-item {
+            margin-bottom: 4rem;
+            width: 50%;
+            padding-right: 4rem;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 1s ease-out;
+        }
+
+        .tech-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .tech-item {
+                width: 100%;
+                padding-left: 90px;
+                padding-right: 0;
+            }
+        }
+
+        .tech-item:nth-child(even) {
+            margin-left: auto;
+            padding-left: 4rem;
+            padding-right: 0;
+            text-align: right;
+            transform: translateX(50px);
+        }
+
+        @media (max-width: 768px) {
+            .tech-item:nth-child(even) {
+                margin-left: 0;
+                padding-left: 90px;
+                padding-right: 0;
+                text-align: left;
+                transform: translateX(-50px);
+            }
+        }
+
+        .tech-dot {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--darker);
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            right: -52px;
+            top: 20px;
+            box-shadow: 0 0 20px var(--primary);
+            animation: dot-pulse 2s infinite;
+        }
+
+        @keyframes dot-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .tech-dot {
+                right: auto;
+                left: 20px;
+            }
+        }
+
+        .tech-item:nth-child(even) .tech-dot {
+            right: auto;
+            left: -52px;
+        }
+
+        @media (max-width: 768px) {
+            .tech-item:nth-child(even) .tech-dot {
+                left: 20px;
+            }
+        }
+
+        .tech-content {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 153, 204, 0.1) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-content:hover {
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .tech-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .tech-content p {
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        /* Footer with fade in */
+        footer {
+            background: linear-gradient(180deg, rgba(10, 14, 39, 0.9) 0%, var(--darker) 100%);
+            border-top: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--text);
+            animation: fade-in 2s ease-out;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* Additional animations and improvements */
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Global Particles Background -->
+    <div class="particles-bg" id="globalParticles"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#hero">Главная</a></li>
+            <li><a href="#about">О проекте</a></li>
+            <li><a href="#physics">Физика</a></li>
+            <li><a href="#features">Особенности</a></li>
+            <li><a href="#technology">Технология</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Проект "Прорыв"</h1>
+            <p class="hero-subtitle">Сверхъядерная экосистема с замкнутым топливным циклом</p>
+            <p class="hero-description">
+                Откройте эру вечной энергии: революционная технология, где ядерные отходы становятся топливом будущего. Устойчивость, эффективность и безопасность для поколений вперед.
+            </p>
+            <button class="cta-button" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">Исследовать</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>О Проекте "Прорыв"</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <h3>Вечная Энергия Будущего</h3>
+                <p>Проект "Прорыв" — это прорывная ядерная экосистема, построенная на замкнутом топливном цикле. Мы превращаем ядерные отходы в ценный ресурс, обеспечивая бесконечный источник чистой энергии.</p>
+                <p>Наша технология минимизирует экологический footprint, повышает эффективность в 100 раз и гарантирует безопасность на всех уровнях.</p>
+                <p>Присоединяйтесь к революции в энергетике, где физика встречает инновации для устойчивого мира.</p>
+            </div>
+            <div class="about-visual">
+                <div class="atom-container">
+                    <div class="nucleus"></div>
+                    <div class="orbit"></div>
+                    <div class="orbit"></div>
+                    <div class="orbit"></div>
+                    <div class="orbit"></div>
+                    <!-- Electrons added via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Physics Section -->
+    <section id="physics">
+        <h2>Физика Вечной Энергии</h2>
+        <div class="physics-grid">
+            <div class="physics-card">
+                <div class="physics-card-inner">
+                    <div class="physics-card-front">
+                        <h3>⚛️ Ядерное Деление</h3>
+                        <p>Контролируемые реакции деления высвобождают энергию из атомов, создавая основу для вечного цикла.</p>
+                        <div class="formula">E = mc²<br>Фундаментальная формула энергии</div>
+                    </div>
+                    <div class="physics-card-back">
+                        <h3>Подробности</h3>
+                        <p>Реакции в быстрых реакторах позволяют сжигать актиноиды полностью.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="physics-card">
+                <div class="physics-card-inner">
+                    <div class="physics-card-front">
+                        <h3>🔄 Замкнутый Цикл</h3>
+                        <p>Переработка топлива минимизирует отходы, достигая 99.9% эффективности.</p>
+                        <div class="formula">Эффективность = (Энергия_out / Энергия_in) * 100%</div>
+                    </div>
+                    <div class="physics-card-back">
+                        <h3>Подробности</h3>
+                        <p>Использование плутония и минорных актиноидов в цикле.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="physics-card">
+                <div class="physics-card-inner">
+                    <div class="physics-card-front">
+                        <h3>⚡ Энергоэффективность</h3>
+                        <p>Преобразование ядерной энергии в электрическую с минимальными потерями.</p>
+                        <div class="formula">P = η * Q</div>
+                    </div>
+                    <div class="physics-card-back">
+                        <h3>Подробности</h3>
+                        <p>Термодинамический цикл с КПД >40%.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="physics-card">
+                <div class="physics-card-inner">
+                    <div class="physics-card-front">
+                        <h3>🛡️ Безопасность</h3>
+                        <p>Пассивные системы предотвращают аварии автоматически.</p>
+                        <div class="formula">Риск = 10^{-7} / год</div>
+                    </div>
+                    <div class="physics-card-back">
+                        <h3>Подробности</h3>
+                        <p>Саморегулирующиеся механизмы и многослойная защита.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2>Ключевые Преимущества</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">♻️</div>
+                <h3>Замкнутый Цикл</h3>
+                <p>Полная утилизация топлива без отходов.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Экологичность</h3>
+                <p>Нулевые выбросы и минимальное воздействие.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💪</div>
+                <h3>Мощность</h3>
+                <p>Гигаватты энергии на компактной площади.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Безопасность</h3>
+                <p>Передовые системы защиты.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Надежность</h3>
+                <p>24/7 работа с 99% uptime.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Инновации</h3>
+                <p>Решение глобального энергетического кризиса.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology">
+        <h2>Этапы Развития</h2>
+        <div class="tech-timeline">
+            <div class="tech-item">
+                <div class="tech-dot"></div>
+                <div class="tech-content">
+                    <h3>2023-2025: Концепция</h3>
+                    <p>Разработка основ и моделирование.</p>
+                </div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-dot"></div>
+                <div class="tech-content">
+                    <h3>2026-2028: Прототип</h3>
+                    <p>Строительство и тесты демонстратора.</p>
+                </div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-dot"></div>
+                <div class="tech-content">
+                    <h3>2029-2032: Запуск</h3>
+                    <p>Промышленная эксплуатация.</p>
+                </div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-dot"></div>
+                <div class="tech-content">
+                    <h3>2033+: Масштабирование</h3>
+                    <p>Глобальное развертывание сети.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Проект "Прорыв" - Вечная Энергия</p>
+        <p>Ядерная экосистема будущего</p>
+        <p><a href="#">Контакты</a> | <a href="#">Документация</a> | <a href="#">Исследования</a></p>
+    </footer>
+
+    <script>
+        // Global Particles
+        const globalParticles = document.getElementById('globalParticles');
+        const numParticles = 200;
+        for (let i = 0; i < numParticles; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 5 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.top = `${Math.random() * 100 + 100}vh`; // Start below view
+            particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            globalParticles.appendChild(particle);
+        }
+
+        // Atom Electrons
+        const atomContainer = document.querySelector('.atom-container');
+        const orbitSizes = [100, 150, 200, 125]; // px for --radius
+        for (let orbit = 0; orbit < 4; orbit++) {
+            for (let e = 0; e < 3; e++) {
+                const electron = document.createElement('div');
+                electron.classList.add('electron');
+                electron.style.animationDuration = `${5 + orbit * 2}s`;
+                electron.style.animationDelay = `-${e * (5 + orbit * 2) / 3}s`;
+                electron.style.setProperty('--radius', `${orbitSizes[orbit]}px`);
+                atomContainer.appendChild(electron);
+            }
+        }
+
+        // Scroll Reveal
+        const sections = document.querySelectorAll('section');
+        const techItems = document.querySelectorAll('.tech-item');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(sec => observer.observe(sec));
+        techItems.forEach(item => observer.observe(item));
+
+        // Card Flip Setup - No longer needed as we use inner div
+    </script>
+</body>
+</html>

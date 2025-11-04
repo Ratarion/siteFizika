@@ -4,41 +4,32 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>3D Модель реактора</title>
-    <link rel="stylesheet" href="css/reactor-styles.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/features.css">
 
-    <!-- model-viewer (module) -->
     <script type="module" src="./vendor/model-viewer.min.js"></script>
-    <!-- three.js + loaders -->
-    <script src="https://unpkg.com/three@0.164.0/build/three.min.js"></script>
-    <script src="https://unpkg.com/three@0.164.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://unpkg.com/three@0.164.0/examples/js/loaders/GLTFLoader.js"></script>
 
     <style>
-      /* Минимальные локальные уточнения (не трогают ваш основной CSS) */
+      /* ... (локальные стили без изменений) ... */
       .viewer-toggle { display:flex; gap:10px; margin-top:12px; }
       .viewer-toggle .btn { padding:8px 12px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer; text-decoration:none; color:inherit; }
       .viewer-toggle .btn.active { background:#007bff; color:#fff; border-color:#007bff; }
-      /* Поддержка контейнера three.js */
       #threejs-container { width:100%; height:500px; border-radius:8px; overflow:hidden; background:transparent; display:none; }
-      /* Поддержка model-viewer - делаем его блоком внутри контейнера */
       model-viewer { display:block; width:100%; height:500px; border-radius:8px; }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container subpage">
         <header>
             <h1>Виртуальная модель реактора</h1>
             <p class="subtitle">3D-просмотр конструкции и компонентов</p>
         </header>
         
-
-        
-        <!-- 3D модель ======== -->
         <main class="media" style="grid-template-columns: 1fr; margin-top:16px;">
             <section class="card" aria-label="3D модель реактора">
                 <strong>Конфигурация: БРЕСТ-ОД-300</strong>
 
-                <!-- model-viewer (по умолчанию показан) -->
                 <div id="modelviewer-wrapper">
                   <model-viewer 
                     id="mv"
@@ -59,7 +50,7 @@
         </div>
 
         <footer>
-            <div class="footer-content">
+          <div class="footer-content">
                 <div class="footer-section">
                     <h3>Контакты</h3>
                     <ul>
@@ -72,12 +63,10 @@
                 <div class="footer-section">
                     <h3>Информация</h3>
                     <ul>
-                        <li><a href="project.html">О проекте</a></li>
                         <li><a href="team.html">Наша команда</a></li>
                     </ul>
                 </div>
                 
-                <!--Список литературы-->
                 <div class="footer-section">
                   <h3>Список литературы</h3>
                   <ul>
@@ -92,15 +81,39 @@
                 <div class="footer-section">
                     <h3>Полезные ссылки</h3>
                     <ul>
-                        <li><a href="technology.html">Технологии</a></li>
+                        <li><a href="project.html">О проекте</a></li>
+                        <li><a href="https://kuzstu.ru">Университет</a></li>
+                        <li><a href="technology.html">Наши технологии</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="copyright">
-                <p>© 2025 Проект "Прорыв". Все права защищены.</p>
+                <p>© 2025 Проект "Прорыв" — концептуальная демонстрация. Не является техническим проектом. Все права защищены.</p>
             </div>
         </footer>
     </div>
+
+    <script>
+        // Intersection Observer для анимаций при скролле
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Наблюдение за ВСЕМИ анимируемыми элементами
+        const elementsToAnimate = document.querySelectorAll(
+            '.index-page header, .subpage header, .project-note, .nav-button, section.card, .member-card, .tech-item'
+        );
+        
+        elementsToAnimate.forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+
 </body>
 </html>

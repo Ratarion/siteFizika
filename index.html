@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Вечная энергия</title>
+  <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/features.css">
 </head>
 
 <body>
-  <div class="container">
+  <div class="container index-page">
     <header>
       <h1>Вечная энергия</h1>
       <p class="subtitle">Российские ядерщики запустили замкнутую реакцию</p>
@@ -17,16 +19,12 @@
 
     <div class="animation-area">
       <div class="atom">
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+        <div class="orbit"></div>
         <div class="nucleus"></div>
-        <div class="orbit orbit-1"><div class="electron"></div></div>
-        <div class="orbit orbit-2"><div class="electron"></div></div>
       </div>
-      <div class="pulse pulse-1"></div>
-      <div class="pulse pulse-2"></div>
-      <div class="pulse pulse-3"></div>
-      <div class="pulse pulse-4"></div>
     </div>
-
     <div class="buttons-container">
       <a class="nav-button" href="complex.html" >3D модель комплекса</a>
       <a class="nav-button" href="reactor.html" >3D модель реактора</a>
@@ -46,15 +44,13 @@
           </ul>
         </div>
 
-            <!-- О нас -->
-        <div class="footer-section">
+            <div class="footer-section">
             <h3>Информация</h3>
             <ul>
               <li><a href="team.html">Наша команда</a></li>
             </ul>
         </div>
 
-        <!--Список литературы-->
         <div class="footer-section">
           <h3>Список литературы</h3>
           <ul>
@@ -69,18 +65,39 @@
         <div class="footer-section">
           <h3>Полезные ссылки</h3>
           <ul>
-            <li><a href="technology.html">Наши технологии</a></li>
             <li><a href="project.html">О проекте</a></li>
             <li><a href="https://kuzstu.ru">Университет</a></li>
+            <li><a href="technology.html">Наши технологии</a></li>
           </ul>
         </div>
       </div>
 
       <div class="copyright">
-        <p>© 2025 Проект "Прорыв". Все права защищены.</p>
+        <p>© 2025 Проект "Прорыв" — концептуальная демонстрация. Не является техническим проектом. Все права защищены.</p>
       </div>
     </footer>
   </div>
+  
+  <script>
+      // Intersection Observer для анимаций при скролле
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('visible');
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, { threshold: 0.1 });
+
+      // Наблюдение за ВСЕМИ анимируемыми элементами
+      const elementsToAnimate = document.querySelectorAll(
+          '.index-page header, .subpage header, .project-note, .nav-button, section.card, .member-card, .tech-item'
+      );
+      
+      elementsToAnimate.forEach(element => {
+          observer.observe(element);
+      });
+  </script>
 
 </body>
 </html>

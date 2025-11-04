@@ -5,11 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Команда разработчиков сайта</title>
 
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/team.css">
+  <link rel="stylesheet" href="css/features.css">
 
 </head>
 <body>
-  <div class="container">
+  <div class="container subpage">
     <header>
       <h1>Команда разработчиков</h1>
       <p class="subtitle">Студенческий проект по исследованию замкнутого ядерного цикла</p>
@@ -104,23 +107,45 @@
         <div class="footer-section">
           <h3>Информация</h3>
           <ul>
-            <li><a href="project.html">О проекте</a></li>
           </ul>
         </div>
 
         <div class="footer-section">
           <h3>Полезные ссылки</h3>
           <ul>
-            <li><a href="technology.html">Технологии</a></li>
+            <li><a href="project.html">О проекте</a></li>
             <li><a href="https://kuzstu.ru">Университет</a></li>
+            <li><a href="technology.html">Наши технологии</a></li>
           </ul>
         </div>
       </div>
 
       <div class="copyright">
-        <p>© 2025 Проект "Прорыв". Все права защищены.</p>
+        <p>© 2025 Проект "Прорыв" — концептуальная демонстрация. Не является техническим проектом. Все права защищены.</p>
       </div>
     </footer>
   </div>
+
+  <script>
+      // Intersection Observer для анимаций при скролле
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('visible');
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, { threshold: 0.1 });
+
+      // Наблюдение за ВСЕМИ анимируемыми элементами
+      const elementsToAnimate = document.querySelectorAll(
+          '.index-page header, .subpage header, .project-note, .nav-button, section.card, .member-card, .tech-item'
+      );
+      
+      elementsToAnimate.forEach(element => {
+          observer.observe(element);
+      });
+  </script>
+
 </body>
 </html>

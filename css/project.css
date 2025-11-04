@@ -1,187 +1,14 @@
-/* Базовые стили — совпадают со стилем index.html */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inconsolata', Tahoma, Geneva, Verdana, sans-serif;
-}
+/* ===============================================
+ * УНИКАЛЬНЫЕ СТИЛИ (для project.html)
+ * =============================================== */
 
-body {
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-    color: white;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-}
-
-.container {
-    max-width: 1100px;
-    width: 100%;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
-
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.25rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,.4);
-}
-
-.subtitle {
-    font-size: 1rem;
-    opacity: .95;
-    margin-bottom: 1rem;
-}
-
-/* Карточки и медиа */
-.media {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    align-items: start;
-}
-
-.card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-    text-align: center;
-    backdrop-filter: blur(6px);
-}
-
-    .card strong {
-        display: block;
-        margin-bottom: .6rem;
-        font-size: 1.05rem;
-    }
-
-video, img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    display: block;
-    background: #000;
-}
-
-.note {
-    opacity: .95;
-    font-size: .95rem;
-    margin-top: .6rem;
-    color: rgba(255,255,255,0.9);
-}
-
-/* Кнопки — как на главной */
-.buttons-container {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1.25rem;
-    flex-wrap: wrap;
-}
-
-.nav-button {
-    display: inline-block;
-    text-decoration: none;
-    background: rgba(255,255,255,0.08);
-    border: 2px solid rgba(255,255,255,0.18);
-    border-radius: 10px;
-    padding: .8rem 1.1rem;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all .25s ease;
-    min-width: 160px;
-    text-align: center;
-    line-height: 1;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-}
-
-    .nav-button:hover {
-        transform: translateY(-4px);
-        background: rgba(255,255,255,0.14);
-    }
-
-footer {
-    margin-top: 2.5rem;
-    font-size: .9rem;
-    opacity: .95;
-    color: #fff;
-}
-
-.footer-content {
-    display: flex;
-    gap: 2rem;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-}
-
-.footer-section {
-    min-width: 200px;
-    text-align: left;
-}
-
-    .footer-section h3 {
-        margin-bottom: .5rem;
-        font-size: 1rem;
-    }
-
-    .footer-section ul {
-        list-style: none;
-        padding-left: 0;
-        font-size: .95rem;
-        opacity: .95;
-    }
-
-    .footer-section a {
-        color: rgba(255,255,255,.9);
-        text-decoration: none;
-    }
-
-.copyright {
-    text-align: center;
-    opacity: .9;
-}
-
-@media (max-width:900px) {
-    .media {
-        grid-template-columns: 1fr;
-    }
-
-    h1 {
-        font-size: 1.8rem;
-    }
-}
-
-@media (max-width:480px) {
-    .nav-button {
-        min-width: 140px;
-        padding: .7rem .8rem;
-        font-size: .95rem;
-    }
-}
-
-/* * ===============================================
- * Стили, перенесенные из project.html
- * ===============================================
- */
-
-/* * Делаем .media в одну колонку на странице "О проекте"
- */
+/* Делаем .media в одну колонку на странице "О проекте" */
 .media {
   grid-template-columns: 1fr;
   gap: 2rem; /* Немного увеличим отступ между карточками */
 }
 
-/* * Стили для текстовых карточек на странице "О проекте"
- */
+/* Стили для текстовых карточек на странице "О проекте" */
 .project-text-card {
   text-align: left;
   padding: 1.5rem 2rem; /* Чуть больше отступы для текста */
@@ -211,22 +38,7 @@ footer {
 
  .project-text-card li strong {
    color: #fff; /* Выделим жирный текст */
+   font-weight: bold; /* Убедимся, что он жирный */
+   display: inline; /* Сбрасываем display: block от .card strong */
+   margin-bottom: 0;
  }
-
-/* * ===============================================
- * Стили для .project-note (добавлены из team.html)
- * ===============================================
- */
-
-.project-note {
-    background: rgba(255,255,255,0.05);
-    border-left: 3px solid #fdbb2d;
-    padding: 1rem 1.5rem;
-    border-radius: 0 8px 8px 0;
-    margin-top: 2rem; /* Отступ сверху от .media */
-}
-
-    .project-note p {
-        font-style: italic;
-        opacity: 0.9;
-    }

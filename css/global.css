@@ -1,0 +1,72 @@
+/* ===============================================
+ * ГЛОБАЛЬНЫЕ СТИЛИ (для всех страниц)
+ * =============================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inconsolata', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    /* Используем существующие цвета, но добавляем анимацию */
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background-size: 400% 400%; /* Увеличиваем размер для 'движения' */
+    animation: gradient-flow 15s ease infinite; /* Добавляем анимацию */
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+footer {
+    width: 100%;
+    max-width: 1200px; /* Берем максимальную ширину для футера */
+    margin: 3rem auto 0;
+    font-size: .9rem;
+    opacity: .95;
+    color: #fff;
+}
+
+.footer-content {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.footer-section {
+    min-width: 200px;
+}
+
+    .footer-section h3 {
+        margin-bottom: .5rem;
+        font-size: 1rem;
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding-left: 0;
+        font-size: .95rem;
+        opacity: .95;
+    }
+
+    .footer-section a {
+        color: rgba(255,255,255,.9);
+        text-decoration: none;
+    }
+
+.copyright {
+    text-align: center;
+    opacity: .9;
+}
+
+@keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
