@@ -17,6 +17,48 @@
       .viewer-toggle .btn.active { background:#007bff; color:#fff; border-color:#007bff; }
       #threejs-container { width:100%; height:500px; border-radius:8px; overflow:hidden; background:transparent; display:none; }
       model-viewer { display:block; width:100%; height:500px; border-radius:8px; }
+
+      .hotspot {
+        display: block;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: none;
+        background-color: #fdbb2d; /* Акцентный цвет из вашего дизайна */
+        font-size: 14px;
+        color: #1a2a6c; /* Темный текст */
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s, transform 0.3s;
+      }
+
+      .hotspot:hover {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      /* Стили для аннотаций (всплывающий текст при hover) */
+      .annotation {
+        display: none; /* Скрыто по умолчанию */
+        background: rgba(255, 255, 255, 0.9);
+        color: #1a2a6c;
+        padding: 8px 12px;
+        border-radius: 6px;
+        position: absolute;
+        pointer-events: none;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+      }
+
+      /* Показываем аннотацию при hover на hotspot */
+      .hotspot:hover + .annotation {
+        display: block;
+      }
+
+      model-viewer.mv-annotations-visible .annotation {
+        display: block;
+      }
     </style>
 </head>
 <body>
@@ -30,17 +72,53 @@
             <section class="card" aria-label="3D модель реактора">
                 <strong>Конфигурация: БРЕСТ-ОД-300</strong>
 
+                <button id="toggle-annotations-btn" class="subpage nav-button" style="margin: 1rem 0; min-width: 0;">
+                    Показать все аннотации
+                </button>
                 <div id="modelviewer-wrapper">
                   <model-viewer 
-                    id="mv"
-                    src="assets/reactor.glb" 
-                    alt="3D модель ядерного реактора"
-                    auto-rotate
-                    camera-controls
-                    shadow-intensity="1"
-                    exposure="1"
-                    ar
-                    ></model-viewer>
+                        id="mv"
+                        src="assets/reactor.glb"
+                        alt="3D модель ядерного реактора"
+                        auto-rotate
+                        camera-controls
+                        shadow-intensity="1"
+                        exposure="1"
+                        ar
+                        >
+
+                        <button
+                            class="hotspot"
+                            slot="hotspot-shell-spot" 
+                            data-position="-0.05 -0.2 0.15" 
+                            data-normal="-0.05 -0.2 0.157"
+                            data-visibility-attribute="visible">1
+                        </button>
+                        <div class="annotation" slot="hotspot-shell-spot">
+                            Ядро реактора: Здесь происходит цепная реакция.
+                        </div>
+
+                        <button
+                            class="hotspot"
+                            slot="hotspot-spot-2" 
+                            data-position="0.4 0.256 0" 
+                            data-normal="0.4 0.256 0"
+                            data-visibility-attribute="visible">2
+                        </button>
+                        <div class="annotation" slot="hotspot-spot-2">
+                            Парогенратор. 
+                        </div>
+                    
+                        <button
+                            class="hotspot"
+                            slot="hotspot-spot-3" 
+                            data-position="0.2 0.2 0.33" data-normal="0.0 -0.4 -0.05"
+                            data-visibility-attribute="visible">3
+                        </button>
+                        <div class="annotation" slot="hotspot-spot-3">
+                            Подвод питательной воды.
+                        </div>
+                    </model-viewer>
                 </div>
             </section>
         </main>
@@ -66,17 +144,6 @@
                         <li><a href="team.html">Наша команда</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-section">
-                  <h3>Список литературы</h3>
-                  <ul>
-                    <li><a href="">Заглушка</a></li>
-                    <li><a href="">Заглушка</a></li>
-                    <li><a href="">Заглушка</a></li>
-                    <li><a href="">Заглушка</a></li>
-                    <li><a href="">Заглушка</a></li>
-                  </ul>
-                </div>
 
                 <div class="footer-section">
                     <h3>Полезные ссылки</h3>
@@ -88,8 +155,57 @@
                 </div>
             </div>
 
-            <div class="copyright">
+            <div class="footer-section">
+              <h3 style="text-align: center;">Список литературы: Реактор БРЕСТ-ОД-300</h3>
+              <ol>
+                <li id="ref-1">
+                  <a href="https://www.rosatom.ru/journalist/news/v-severske-prodolzhaetsya-stroitelstvo-opytno-demonstratsionnogo-energeticheskogo-kompleksa-s-reaktorom-brest-od-300/"
+                     target="_blank" rel="noopener">
+                    «ТВЭЛ» и «Прорыв» Госкорпорации «Росатом»  переработка ОЯТ быстрых реакторов БРЕСТ-ОД-300» 
+                  </a>
+                </li>
+            
+                <li id="ref-2">
+                  <a href="https://rkm.rosatom.ru/innov/projects/proryv/"
+                     target="_blank" rel="noopener">
+                    Реализуемый Госкорпорацией «Росатом» проект «Прорыв»
+                </li>
+            
+                <li id="ref-3">
+                  <a href="https://www.atomic-energy.ru/articles/2023/11/20/140785"
+                     target="_blank" rel="noopener">
+                    Портал «Атомная энергия». «БРЕСТ-ОД-300 — реактор будущего: принципы работы, безопасность и инновации»
+                  </a>
+                </li>
+            
+                <li id="ref-4">
+                  <a href="https://www.ippe.ru/nuclear-power/fast-neutron-reactors/120-brest-300-nuclear-reactor"
+                     target="_blank" rel="noopener">
+                    Институт физико-энергетический им. А.И. Лейпунского (ИППЭ, Обнинск). «БРЕСТ-ОД-300 — быстрый реактор на свинцовом теплоносителе»
+                  </a>
+                </li>
+            
+                <li id="ref-5">
+                  <a href="https://ria.ru/20240125/reaktor-1923159955.html"
+                     target="_blank" rel="noopener">
+                    РИА Новости. «Реактор из будущего: в России строят ядерный комплекс IV поколения»
+                  </a>
+                </li>
+            
+                <li id="ref-6">
+                  <a href="https://inis.iaea.org/search/search.aspx?orig_q=RN:53104667"
+                     target="_blank" rel="noopener">
+                    IAEA INIS. «The BREST-OD-300 lead-cooled fast reactor and its fuel cycle technologies»
+                  </a>
+                </li>
+              </ol>
+            </div>
+            
+            <div class="copyright" style="margin-top: 1.5rem;">
                 <p>© 2025 Проект "Прорыв" — концептуальная демонстрация. Не является техническим проектом. Все права защищены.</p>
+            </div>
+            <div class="project-note">
+                <p>Этот проект создан в образовательных целях для демонстрации возможностей замкнутого ядерного цикла и технологий будущего.</p>
             </div>
         </footer>
     </div>
@@ -112,6 +228,37 @@
         
         elementsToAnimate.forEach(element => {
             observer.observe(element);
+        });
+
+        /* ===============================================
+         НАЧАЛО: НОВЫЙ КОД ДЛЯ КНОПКИ "ПОКАЗАТЬ АННОТАЦИИ"
+        ===============================================
+        */
+        
+        // Ждем, пока страница полностью загрузится
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Находим наши элементы
+            const modelViewer = document.querySelector('#mv');
+            const toggleBtn = document.querySelector('#toggle-annotations-btn');
+
+            // Проверяем, что оба элемента существуют
+            if (modelViewer && toggleBtn) {
+                
+                // Добавляем слушатель клика на кнопку
+                toggleBtn.addEventListener('click', () => {
+                    
+                    // Переключаем наш CSS-класс на 3D-модели
+                    modelViewer.classList.toggle('mv-annotations-visible');
+
+                    // Обновляем текст на кнопке
+                    if (modelViewer.classList.contains('mv-annotations-visible')) {
+                        toggleBtn.textContent = 'Скрыть все аннотации';
+                    } else {
+                        toggleBtn.textContent = 'Показать все аннотации';
+                    }
+                });
+            }
         });
     </script>
 
