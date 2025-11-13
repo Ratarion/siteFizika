@@ -105,3 +105,11 @@
         grid-template-columns: 1fr;
     }
 }
+
+.member-card img {
+    width: 100%;
+    height: 280px; /* можно изменить, например 250–300px по вкусу */
+    object-fit: cover; /* или contain, если важно не обрезать лица */
+    border-radius: 8px;
+    background-color: #fff; /* чтобы фон оставался ровным */
+}
