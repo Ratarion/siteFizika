@@ -42,3 +42,128 @@
    display: inline; /* Сбрасываем display: block от .card strong */
    margin-bottom: 0;
  }
+
+ /* ===== Хронология (аналог как на bit-24.ru) ===== */
+
+.chronology {
+  padding: 1rem;
+}
+.chronology-inner {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* Блоки с текстом */
+.chronology-main {
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  min-height: 250px;
+  color: white;
+}
+.chronology-slide {
+  display: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.chronology-slide.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+.chronology-slide h3 {
+  margin-top: 0;
+  color: #fdbb2d;
+  font-size: 1.3rem;
+}
+.chronology-slide p {
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+/* Годы справа */
+/* Годы справа */
+.chronology-nav {
+  position: relative;
+  /* Ограничиваем высоту "окошка" просмотра */
+  height: 300px; 
+  overflow: hidden;
+  /* Центрируем содержимое по горизонтали */
+  display: flex;
+  justify-content: center;
+  
+  /* Магия затемнения: прозрачность сверху и снизу */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+}
+
+/* Линия по центру (опционально, можно скрыть, если мешает восприятию колеса) */
+.chronology-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.chronology-years {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 2;
+  
+  /* Абсолютное позиционирование для движения списка */
+  position: absolute;
+  top: 50%; /* Начало отсчета от середины контейнера */
+  left: 0;
+  right: 0;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0; /* Убираем gap, будем регулировать отступы через padding элементов */
+  
+  /* Плавность движения списка */
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.chronology-year {
+  background: none;
+  border: none;
+  cursor: pointer;
+  /* Увеличим вертикальные отступы, чтобы годы не слипались */
+  padding: 10px 20px; 
+  border-radius: 20px;
+  
+  /* Стили неактивных годов */
+  color: rgba(255,255,255,0.4);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  
+  /* Неактивные годы чуть меньше */
+  transform: scale(0.9);
+}
+
+.chronology-year:hover {
+  color: rgba(255,255,255,0.8);
+}
+
+/* Активный год */
+.chronology-year.active {
+  /* Подсветка */
+  background: transparent; /* Убираем фон кнопки, если хотим только текст, или оставляем градиент */
+  color: #fdbb2d; 
+  text-shadow: 0 0 10px rgba(253, 187, 45, 0.4);
+  
+  /* Увеличение */
+  transform: scale(1.2);
+  font-size: 1.2rem;
+}

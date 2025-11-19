@@ -11,6 +11,79 @@
     <link rel="stylesheet" href="css/features.css">
 
 </head>
+
+<script>
+(function(){
+  const yearsList = document.querySelector('.chronology-years'); // Сам список <ul>
+  const years = Array.from(document.querySelectorAll('.chronology-year'));
+  const slides = Array.from(document.querySelectorAll('.chronology-slide'));
+  const nav = document.getElementById('chronologyNav');
+
+  let activeIndex = 0;
+  let wheelCooldown = false;
+
+  function setActive(index, opts = {}) {
+    if (index < 0) index = 0;
+    if (index >= slides.length) index = slides.length - 1;
+    if (index === activeIndex && !opts.force) return;
+
+    // 1. Переключаем слайды с текстом
+    slides.forEach(s => s.classList.toggle('active', Number(s.dataset.index) === index));
+    
+    // 2. Переключаем классы на кнопках годов
+    years.forEach(y => {
+      const i = Number(y.dataset.index);
+      y.classList.toggle('active', i === index);
+      y.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+    });
+
+    // 3. ДВИЖЕНИЕ СПИСКА (Эффект колеса)
+    // Находим активный элемент
+    const activeBtn = years[index];
+    // Считаем, где находится центр активной кнопки относительно верха списка
+    // offsetTop - отступ сверху внутри списка
+    // clientHeight - высота самой кнопки
+    const itemCenter = activeBtn.offsetTop + (activeBtn.clientHeight / 2);
+    
+    // Смещаем список так, чтобы центр кнопки оказался в центре контейнера (top: 50% мы задали в CSS)
+    // Формула: сдвигаем список вверх на расстояние до центра кнопки
+    yearsList.style.transform = `translateY(-${itemCenter}px)`;
+
+    activeIndex = index;
+  }
+
+  // Клик по году
+  years.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setActive(Number(btn.dataset.index));
+    });
+
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp') { setActive(activeIndex - 1); e.preventDefault(); }
+      if (e.key === 'ArrowDown') { setActive(activeIndex + 1); e.preventDefault(); }
+    });
+  });
+
+  // Колесо мыши
+  nav.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (wheelCooldown) return;
+    wheelCooldown = true;
+    setTimeout(() => wheelCooldown = false, 100); // Чуть уменьшил задержку для плавности
+
+    const delta = e.deltaY;
+    if (delta > 0) setActive(activeIndex + 1);
+    else if (delta < 0) setActive(activeIndex - 1);
+  }, { passive: false });
+
+  // Инициализация (ждем немного, чтобы стили применились и размеры посчитались)
+  setTimeout(() => {
+      setActive(0, { force: true });
+  }, 50);
+  
+})();
+</script>
+
 <body>
     
     <div class="container subpage">
@@ -201,43 +274,141 @@
                 </p>
             </section>
 
-            <section class="card project-text-card" aria-label="Развитие технологии">
-                <h2>Развитие технологии</h2>
-                
-                <div class="tech-timeline">
-                    <div class="tech-item">
-                        <div class="tech-dot"></div>
-                        <div class="tech-content">
-                            <h3>2024 - Концепция</h3>
-                            <p>Разработка базовой концепции замкнутого топливного цикла и начальные расчеты.</p>
-                        </div>
-                    </div>
+            <section class="card project-text-card chronology" aria-label="Хронология">
+              <h2>Хронология событий</h2>
 
-                    <div class="tech-item">
-                        <div class="tech-dot"></div>
-                        <div class="tech-content">
-                            <h3>2025 - Исследования</h3>
-                            <p>Глубокое исследование материалов, разработка математических моделей и симуляции.</p>
-                        </div>
-                    </div>
+              <div class="chronology-inner">
+            
+                <div class="chronology-main" id="chronologyMain">
+                  
+                  <div class="chronology-slide" data-index="0">
+                    <h3>2026</h3>
+                    <p><strong>Завершение монтажа и подготовка к пуску</strong><br>
+                        Планируется завершить монтаж основного оборудования реактора БРЕСТ-ОД-300, провести комплексные испытания всех систем и начать подготовку к загрузке топлива перед физическим пуском в 2028 году.
+                    </p>
+                  </div>
 
-                    <div class="tech-item">
-                        <div class="tech-dot"></div>
-                        <div class="tech-content">
-                            <h3>2026 - Прототип</h3>
-                            <p>Создание опытного образца малой мощности для проверки ключевых концепций.</p>
-                        </div>
-                    </div>
+                  <div class="chronology-slide" data-index="1">
+                    <h3>2025</h3>
+                    <p><strong>Достроено здание реактора и поставлено ключевое оборудование</strong><br>
+                    Завершено строительство здания реакторной установки, доставлено и смонтировано основное оборудование. Начаты пусконаладочные работы на модуле фабрикации/рефабрикации топлива/
+                    </p>
+                  </div>
+                  
+                  <div class="chronology-slide" data-index="2">
+                    <h3>2024</h3>
+                    <p>
+                      <strong>Монтаж реактора и пуск МФР.</strong>
+                      В январе на площадку доставлена первая часть корпуса реактора БРЕСТ-ОД-300. На модуле фабрикации/рефабрикации (МФР) начались комплексные испытания оборудования для производства СНУП-топлива.
+                    </p>
+                  </div>
+              
+                  <div class="chronology-slide" data-index="3">
+                    <h3>2023</h3>
+                    <p>
+                      <strong>Первое оборудование и имитаторы.</strong>
+                      Завершено изготовление и отгрузка уникального оборудования для реакторной установки. Специалисты СХК успешно изготовили имитаторы тепловыделяющих сборок (ТВС) с нитридным топливом для проверки автоматизированных линий.
+                    </p>
+                  </div>
+              
+                  <div class="chronology-slide" data-index="4">
+                    <h3>2022</h3>
+                    <p>
+                      <strong>Фундамент реактора.</strong>
+                      Завершена заливка фундаментной плиты здания реактора БРЕСТ-ОД-300. Строители приступили к возведению стен реакторного острова. Параллельно завершены основные строительные работы на здании модуля фабрикации.
+                    </p>
+                  </div>
 
-                    <div class="tech-item">
-                        <div class="tech-dot"></div>
-                        <div class="tech-content">
-                            <h3>2027 - Тестирование</h3>
-                            <p>Полевые испытания прототипа, сбор данных и оптимизация компонентов системы.</p>
-                        </div>
-                    </div>
+                  <div class="chronology-slide" data-index="5">
+                    <h3>2021</h3>
+                    <p>
+                      <strong>Первый бетон.</strong>
+                      8 июня дан официальный старт строительству реактора БРЕСТ-ОД-300. В основание фундаментной плиты залит первый бетон. Ростехнадзор выдал лицензию на сооружение ядерной установки.
+                    </p>
+                  </div>
+              
+                  <div class="chronology-slide" data-index="6">
+                    <h3>2020</h3>
+                    <p>
+                      <strong>Монтаж технологических линий.</strong>
+                      На модуле фабрикации начался монтаж основного технологического оборудования для производства топлива. Получено положительное заключение Главгосэкспертизы на этап строительства реактора.
+                    </p>
+                  </div>
+              
+                  <div class="chronology-slide" data-index="7">
+                    <h3>2019</h3>
+                    <p>
+                      <strong>Старт строительства ОДЭК.</strong>
+                      Активная фаза возведения модуля фабрикации/рефабрикации (МФР). Это первый из трех ключевых объектов замкнутого цикла (МФР, Реактор БРЕСТ, Модуль переработки), который позволит производить топливо непосредственно на АЭС.
+                    </p>
+                  </div>
+              
                 </div>
+            
+                <nav class="chronology-nav" id="chronologyNav" aria-label="Годы хронологии">
+                  <div class="chronology-line" aria-hidden="true"></div>
+                  <ul class="chronology-years" role="list">
+                    <li><button class="chronology-year" data-index="0" aria-pressed="true"> 2026</button></li>
+                    <li><button class="chronology-year" data-index="1"> 2025</button></li>
+                    <li><button class="chronology-year" data-index="2"> 2024</button></li>
+                    <li><button class="chronology-year" data-index="3">2023</button></li>
+                    <li><button class="chronology-year" data-index="4">2022</button></li>
+                    <li><button class="chronology-year" data-index="5">2021</button></li>
+                    <li><button class="chronology-year" data-index="6">2020</button></li>
+                    <li><button class="chronology-year" data-index="7">2019</button></li>
+                  </ul>
+                </nav>
+            
+              </div>
             </section>
+
+            <!-- СКРИПТ ДЛЯ ПЕРЕКЛЮЧЕНИЯ -->
+            <script>
+            (function(){
+              const years = Array.from(document.querySelectorAll('.chronology-year'));
+              const slides = Array.from(document.querySelectorAll('.chronology-slide'));
+              const nav = document.getElementById('chronologyNav');
+            
+              let activeIndex = 0;
+              let wheelCooldown = false;
+            
+              function setActive(index, opts = {}) {
+                if (index < 0) index = 0;
+                if (index >= slides.length) index = slides.length - 1;
+                if (index === activeIndex && !opts.force) return;
+            
+                slides.forEach(s => s.classList.toggle('active', Number(s.dataset.index) === index));
+                years.forEach(y => {
+                  const i = Number(y.dataset.index);
+                  y.classList.toggle('active', i === index);
+                  y.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+                });
+            
+                const activeBtn = years[index];
+                if (activeBtn?.scrollIntoView) {
+                  activeBtn.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+                }
+            
+                activeIndex = index;
+              }
+          
+              years.forEach(btn => {
+                btn.addEventListener('click', () => setActive(Number(btn.dataset.index)));
+              });
+          
+              nav.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                if (wheelCooldown) return;
+                wheelCooldown = true;
+                setTimeout(() => wheelCooldown = false, 180);
+            
+                if (e.deltaY > 0) setActive(activeIndex + 1);
+                else setActive(activeIndex - 1);
+              }, { passive: false });
+          
+              setActive(0, { force: true });
+            })();
+            </script>
 
         </main>
 
