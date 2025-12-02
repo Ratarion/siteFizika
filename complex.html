@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>3D Модель комлекса</title>
+    <title>3D Модель комплекса</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/features.css">
@@ -11,24 +11,74 @@
     <script type="module" src="./vendor/model-viewer.min.js"></script>
 
     <style>
-      /* ... (локальные стили без изменений) ... */
+      /* ... (локальные стили) ... */
       .viewer-toggle { display:flex; gap:10px; margin-top:12px; }
       .viewer-toggle .btn { padding:8px 12px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer; text-decoration:none; color:inherit; }
       .viewer-toggle .btn.active { background:#007bff; color:#fff; border-color:#007bff; }
       #threejs-container { width:100%; height:500px; border-radius:8px; overflow:hidden; background:transparent; display:none; }
       model-viewer { display:block; width:100%; height:500px; border-radius:8px; }
+
+      /* Стили для точек интереса (как в reactor.html) */
+      .hotspot {
+        display: block;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: none;
+        background-color: #fdbb2d; /* Акцентный цвет */
+        font-size: 14px;
+        color: #1a2a6c; /* Темный текст */
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s, transform 0.3s;
+      }
+
+      .hotspot:hover {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      /* Стили для аннотаций (всплывающий текст при hover) */
+      .annotation {
+        display: none; /* Скрыто по умолчанию */
+        background: rgba(255, 255, 255, 0.9);
+        color: #1a2a6c;
+        padding: 8px 12px;
+        border-radius: 6px;
+        position: absolute;
+        pointer-events: none;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+        width: max-content;
+        max-width: 200px;
+      }
+
+      /* Показываем аннотацию при hover на hotspot */
+      .hotspot:hover + .annotation {
+        display: block;
+      }
+
+      /* Класс, который добавляет JS для показа всех аннотаций сразу */
+      model-viewer.mv-annotations-visible .annotation {
+        display: block;
+      }
     </style>
 </head>
 <body>
     <div class="container subpage">
         <header>
-            <h1>Виртуальная модель комлекса</h1>
+            <h1>Виртуальная модель комплекса</h1>
             <p class="subtitle">3D-просмотр конструкции и компонентов</p>
         </header>
         
         <main class="media" style="grid-template-columns: 1fr; margin-top:16px;">
             <section class="card" aria-label="3D модель комлекса">
-                <strong>Конфигурация: комплекса</strong>
+                <strong>Конфигурация комплекса</strong>
+
+                <button id="toggle-annotations-btn" class="subpage nav-button" style="margin: 1rem 0; min-width: 0;">
+                    Показать все аннотации
+                </button>
 
                 <div id="modelviewer-wrapper">
                     <model-viewer 
@@ -40,7 +90,74 @@
                     shadow-intensity="1"
                     exposure="1"
                     ar
-                    ></model-viewer>
+                    >
+                        <button class="hotspot" 
+                                slot="hotspot-mfr" 
+                                data-position="-0.12 -0.039 -0.15" 
+                                data-normal="1 0 0"
+                                data-visibility-attribute="visible">
+                            1
+                        </button>
+                        <div class="annotation" slot="hotspot-mfr">
+                            Модуль фабрикации/рефабрикации (МФР)
+                        </div>
+
+                        <button class="hotspot" 
+                                slot="hotspot-reactor" 
+                                data-position="0 0 0" 
+                                data-normal="0 1 0"
+                                data-visibility-attribute="visible">
+                            2
+                        </button>
+                        <div class="annotation" slot="hotspot-reactor">
+                            Здание реактора БРЕСТ-ОД-300
+                        </div>
+
+                        <button class="hotspot" 
+                                slot="hotspot-repro" 
+                                data-position="-0.04 -0.039 -0.2" 
+                                data-normal="-1 0 0"
+                                data-visibility-attribute="visible">
+                            3
+                        </button>
+                        <div class="annotation" slot="hotspot-repro">
+                            Модуль переработки ОЯТ
+                        </div>
+
+                        <button class="hotspot" 
+                                slot="hotspot-gradirnya" 
+                                data-position="-0.3 -0.039 0.2" 
+                                data-normal="0 1 0"
+                                data-visibility-attribute="visible">
+                            4
+                        </button>
+                        <div class="annotation" slot="hotspot-gradirnya">
+                            Градирня (система охлаждения)
+                        </div>
+
+                        <button class="hotspot" 
+                                slot="hotspot-mashzal" 
+                                data-position="-0.05 -0.039 0.2" 
+                                data-normal="0 1 0"
+                                data-visibility-attribute="visible">
+                            5
+                        </button>
+                        <div class="annotation" slot="hotspot-mashzal">
+                            Машинный зал (паровая турбина)
+                        </div>
+
+                        <button class="hotspot" 
+                                slot="hotspot-storage" 
+                                data-position="0 -0.039 -0.06" 
+                                data-normal="1 0 0"
+                                data-visibility-attribute="visible">
+                            6
+                        </button>
+                        <div class="annotation" slot="hotspot-storage">
+                            Хранилище радиоактивных отходов
+                        </div>
+
+                    </model-viewer>
                 </div>
             </section>
         </main>
@@ -54,9 +171,9 @@
                 <div class="footer-section">
                     <h3>Контакты</h3>
                     <ul>
-                        <li>✉️ Email: <a href="mailto:info@gmail.com">info@gmail.com</a></li>
+                        <li>✉️ Email: <a href="mailto:ratarionstas@gmail.com">ratarionstas@gmail.com</a></li>
                         <li>📞 Телефон: <a href="tel:+70000000000">8 (000) 000-00-00</a></li>
-                        <li>📍 Адрес: г. Кемеров, ул. Весення, 28</li>
+                        <li>📍 Адрес: г. Кемерово, ул. Весенняя, 28</li>
                     </ul>
                 </div>
 
@@ -64,6 +181,7 @@
                     <h3>Информация</h3>
                     <ul>
                         <li><a href="team.html">Наша команда</a></li>
+                        <li><a href="research.html">Исследование</a></li>
                     </ul>
                 </div>
 
@@ -141,6 +259,25 @@
         
         elementsToAnimate.forEach(element => {
             observer.observe(element);
+        });
+
+        /* ===============================================
+         ЛОГИКА ПЕРЕКЛЮЧЕНИЯ АННОТАЦИЙ
+        =============================================== */
+        document.addEventListener('DOMContentLoaded', () => {
+            const modelViewer = document.querySelector('#mv');
+            const toggleBtn = document.querySelector('#toggle-annotations-btn');
+
+            if (modelViewer && toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    modelViewer.classList.toggle('mv-annotations-visible');
+                    if (modelViewer.classList.contains('mv-annotations-visible')) {
+                        toggleBtn.textContent = 'Скрыть все аннотации';
+                    } else {
+                        toggleBtn.textContent = 'Показать все аннотации';
+                    }
+                });
+            }
         });
     </script>
 

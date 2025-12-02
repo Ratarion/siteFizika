@@ -85,7 +85,6 @@
 }
 
 /* Годы справа */
-/* Годы справа */
 .chronology-nav {
   position: relative;
   /* Ограничиваем высоту "окошка" просмотра */
@@ -166,4 +165,24 @@
   /* Увеличение */
   transform: scale(1.2);
   font-size: 1.2rem;
+}
+/* ===============================================
+ * ИЗМЕНЕНИЕ ЦВЕТА БЛОКОВ С ФОРМУЛАМИ
+ * =============================================== */
+.physics-card .formula-box {
+  /* ВАРИАНТ 4: Полупрозрачный (эффект стекла) */
+  background-color: rgba(9, 64, 184, 0.014) !important;
+  backdrop-filter: blur(5px);
+  
+  border: 1px solid rgba(255, 255, 255, 0.411);
+}
+
+/* Перебиваем старое правило из features.css для всех страниц */
+.project-text-card .formula-box,
+.physics-card .formula-box {
+    background: rgba(212, 209, 209, 0) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-left: 5px solid #fdbb2d !important;
 }

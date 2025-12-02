@@ -1,0 +1,14 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "proba": true
+    },
+    "hide-files.files": [
+        "proba"
+    ],
+    "liveServer.settings.port": 5501
+}
