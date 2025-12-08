@@ -9,16 +9,22 @@
 }
 
 body {
-    /* Используем существующие цвета, но добавляем анимацию */
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-    background-size: 400% 400%; /* Увеличиваем размер для 'движения' */
-    animation: gradient-flow 15s ease infinite; /* Добавляем анимацию */
+    background: linear-gradient(135deg, 
+        #0f0c29, 
+        #1a1a3d, 
+        #302b63, 
+        #24243e, 
+        #0f3460
+    );
+    background-size: 500% 500%;
+    animation: gradient-flow 18s ease infinite;
     color: white;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 2rem;
+    font-family: 'Inconsolata', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 footer {
@@ -66,7 +72,9 @@ footer {
 }
 
 @keyframes gradient-flow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0%   { background-position: 0%   50%; }
+    25%  { background-position: 100% 50%; }
+    50%  { background-position: 100% 100%; }
+    75%  { background-position: 0%   100%; }
+    100% { background-position: 0%   50%; }
 }
