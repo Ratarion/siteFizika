@@ -9,81 +9,10 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/project.css">
     <link rel="stylesheet" href="css/features.css">
+    <script src="js/animations.js" defer></script>
+    <script src="js/chronology.js" defer></script>
 
 </head>
-
-<script>
-(function(){
-  const yearsList = document.querySelector('.chronology-years'); // Сам список <ul>
-  const years = Array.from(document.querySelectorAll('.chronology-year'));
-  const slides = Array.from(document.querySelectorAll('.chronology-slide'));
-  const nav = document.getElementById('chronologyNav');
-
-  let activeIndex = 0;
-  let wheelCooldown = false;
-
-  function setActive(index, opts = {}) {
-    if (index < 0) index = 0;
-    if (index >= slides.length) index = slides.length - 1;
-    if (index === activeIndex && !opts.force) return;
-
-    // 1. Переключаем слайды с текстом
-    slides.forEach(s => s.classList.toggle('active', Number(s.dataset.index) === index));
-    
-    // 2. Переключаем классы на кнопках годов
-    years.forEach(y => {
-      const i = Number(y.dataset.index);
-      y.classList.toggle('active', i === index);
-      y.setAttribute('aria-pressed', i === index ? 'true' : 'false');
-    });
-
-    // 3. ДВИЖЕНИЕ СПИСКА (Эффект колеса)
-    // Находим активный элемент
-    const activeBtn = years[index];
-    // Считаем, где находится центр активной кнопки относительно верха списка
-    // offsetTop - отступ сверху внутри списка
-    // clientHeight - высота самой кнопки
-    const itemCenter = activeBtn.offsetTop + (activeBtn.clientHeight / 2);
-    
-    // Смещаем список так, чтобы центр кнопки оказался в центре контейнера (top: 50% мы задали в CSS)
-    // Формула: сдвигаем список вверх на расстояние до центра кнопки
-    yearsList.style.transform = `translateY(-${itemCenter}px)`;
-
-    activeIndex = index;
-  }
-
-  // Клик по году
-  years.forEach(btn => {
-    btn.addEventListener('click', () => {
-      setActive(Number(btn.dataset.index));
-    });
-
-    btn.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowUp') { setActive(activeIndex - 1); e.preventDefault(); }
-      if (e.key === 'ArrowDown') { setActive(activeIndex + 1); e.preventDefault(); }
-    });
-  });
-
-  // Колесо мыши
-  nav.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    if (wheelCooldown) return;
-    wheelCooldown = true;
-    setTimeout(() => wheelCooldown = false, 100); // Чуть уменьшил задержку для плавности
-
-    const delta = e.deltaY;
-    if (delta > 0) setActive(activeIndex + 1);
-    else if (delta < 0) setActive(activeIndex - 1);
-  }, { passive: false });
-
-  // Инициализация (ждем немного, чтобы стили применились и размеры посчитались)
-  setTimeout(() => {
-      setActive(0, { force: true });
-  }, 50);
-  
-})();
-</script>
-
 <body>
     
     <div class="container subpage">
@@ -379,55 +308,6 @@
             
               </div>
             </section>
-
-            <!-- СКРИПТ ДЛЯ ПЕРЕКЛЮЧЕНИЯ -->
-            <script>
-            (function(){
-              const years = Array.from(document.querySelectorAll('.chronology-year'));
-              const slides = Array.from(document.querySelectorAll('.chronology-slide'));
-              const nav = document.getElementById('chronologyNav');
-            
-              let activeIndex = 0;
-              let wheelCooldown = false;
-            
-              function setActive(index, opts = {}) {
-                if (index < 0) index = 0;
-                if (index >= slides.length) index = slides.length - 1;
-                if (index === activeIndex && !opts.force) return;
-            
-                slides.forEach(s => s.classList.toggle('active', Number(s.dataset.index) === index));
-                years.forEach(y => {
-                  const i = Number(y.dataset.index);
-                  y.classList.toggle('active', i === index);
-                  y.setAttribute('aria-pressed', i === index ? 'true' : 'false');
-                });
-            
-                const activeBtn = years[index];
-                if (activeBtn?.scrollIntoView) {
-                  activeBtn.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
-                }
-            
-                activeIndex = index;
-              }
-          
-              years.forEach(btn => {
-                btn.addEventListener('click', () => setActive(Number(btn.dataset.index)));
-              });
-          
-              nav.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                if (wheelCooldown) return;
-                wheelCooldown = true;
-                setTimeout(() => wheelCooldown = false, 180);
-            
-                if (e.deltaY > 0) setActive(activeIndex + 1);
-                else setActive(activeIndex - 1);
-              }, { passive: false });
-          
-              setActive(0, { force: true });
-            })();
-            </script>
-
         </main>
 
 
@@ -509,28 +389,6 @@
             </div>
         </footer>
     </div> 
-
-<script>
-    // Intersection Observer для анимаций при скролле
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            // Как только элемент пересекает порог (виден на 10%)
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible'); // Добавляем класс
-                observer.unobserve(entry.target); // Прекращаем наблюдение
-            }
-        });
-    }, { threshold: 0.1 }); // Порог 10%
-
-    // Наблюдение за ВСЕМИ анимируемыми элементами на всех страницах
-    const elementsToAnimate = document.querySelectorAll(
-        '.index-page header, .subpage header, .project-note, .nav-button, section.card, .member-card, .tech-item'
-    );
-    
-    elementsToAnimate.forEach(element => {
-        observer.observe(element);
-    });
-</script>
 
 </body>
 </html>

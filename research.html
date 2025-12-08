@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/project.css">
     <link rel="stylesheet" href="css/features.css">
+    <script src="js/animations.js" defer></script>
 
 </head>
 
@@ -172,28 +173,6 @@
             </div>
         </footer>
     </div> 
-
-<script>
-    // Intersection Observer для анимаций при скролле
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            // Как только элемент пересекает порог (виден на 10%)
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible'); // Добавляем класс
-                observer.unobserve(entry.target); // Прекращаем наблюдение
-            }
-        });
-    }, { threshold: 0.1 }); // Порог 10%
-
-    // Наблюдение за ВСЕМИ анимируемыми элементами на всех страницах
-    const elementsToAnimate = document.querySelectorAll(
-        '.index-page header, .subpage header, .project-note, .nav-button, section.card, .member-card, .tech-item'
-    );
-    
-    elementsToAnimate.forEach(element => {
-        observer.observe(element);
-    });
-</script>
 
 </body>
 </html>
