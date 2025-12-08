@@ -33,34 +33,111 @@
 .index-page .buttons-container {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.5rem;          /* Немного уменьшили отступ между кнопками */
     margin-top: 3rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;    /* !ВАЖНО: Запрещаем перенос на новую строку */
+    width: 100%;
+    max-width: 1200px;    /* Ограничиваем ширину контейнера */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .index-page .nav-button {
-    display: inline-block;
+    display: flex;              /* Используем flex для центрирования текста */
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     background: rgba(255,255,255,0.1);
     border: 2px solid rgba(255,255,255,0.3);
     border-radius: 10px;
-    padding: 1.5rem 2rem;
+    padding: 1.2rem 1rem;       /* Уменьшили боковые отступы */
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.1rem;          /* Чуть уменьшили шрифт, чтобы влез длинный текст */
     cursor: pointer;
     transition: all .3s ease;
-    min-width: 200px;
+    
+    /* !ВАЖНЫЕ ИЗМЕНЕНИЯ НИЖЕ: */
+    min-width: auto;            /* Убираем жесткую ширину 200px */
+    flex: 1;                    /* Кнопки будут занимать равное пространство */
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     text-align: center;
-    line-height: 1;
+    line-height: 1.2;           /* Межстрочный интервал для длинного текста */
 }
 
-    .index-page .nav-button:hover {
-        background: rgba(255,255,255,0.2);
-        transform: translateY(-5px);
-        box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-    }
+/* Эффект наведения */
+.nav-button {
+    position: relative; /* Обязательно для эффектов */
+    display: inline-block;
+    text-decoration: none;
+    z-index: 1; /* Чтобы текст был поверх свечения */
+    
+    /* Базовый фон - темное стекло */
+    background: rgba(15, 12, 41, 0.5); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Для Safari */
+    
+    /* Тонкая золотая рамка в покое */
+    border: 1px solid rgba(253, 187, 45, 0.3);
+    border-radius: 4px; /* Чуть более строгие углы для техно-стиля */
+    
+    padding: 1.2rem 2rem;
+    color: #fdbb2d; /* Золотой текст */
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px; /* Чуть шире буквы */
+    
+    cursor: pointer;
+    /* Плавный переход всех свойств */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    overflow: hidden;
+    min-width: 200px;
+    text-align: center;
+    
+    /* Легкое свечение рамки в покое */
+    box-shadow: 0 0 5px rgba(253, 187, 45, 0.1);
+}
+
+/* ЭФФЕКТ ПРИ НАВЕДЕНИИ: Накаливание */
+.nav-button:hover {
+    /* Фон становится ярче, но остается прозрачным */
+    background: rgba(253, 187, 45, 0.15); 
+    border-color: #fdbb2d;
+    color: #fff; /* Текст белеет для контраста */
+    
+    /* Мощное двойное свечение: внешнее и внутреннее */
+    box-shadow: 
+        0 0 20px rgba(253, 187, 45, 0.5), /* Внешнее свечение */
+        inset 0 0 15px rgba(253, 187, 45, 0.3); /* Внутреннее свечение */
+        
+    transform: translateY(-3px) scale(1.01);
+    text-shadow: 0 0 8px rgba(253, 187, 45, 0.8); /* Текст тоже начинает светиться */
+}
+
+/* Эффект нажатия */
+.nav-button:active {
+    transform: translateY(-1px) scale(0.99);
+    box-shadow: 0 0 10px rgba(253, 187, 45, 0.4);
+    transition: 0.1s;
+}
+
+/* Опционально: блик */
+.nav-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+.nav-button:hover::before {
+    left: 100%;
+}
 
 /* Анимация атома */
 .animation-area {

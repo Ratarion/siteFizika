@@ -79,58 +79,122 @@ footer {
     100% { background-position: 0%   50%; }
 }
 
-/* Стили для кнопок-аккордеонов в футере */
-.footer-section {
-    margin-bottom: 1rem;
+/* ===============================================
+ * СТИЛИ ФУТЕРА 
+ * =============================================== */
+
+footer {
+    width: 100%;
+    max-width: 1200px;
+    margin: 4rem auto 0; /* Чуть больше отступ сверху */
+    font-size: .9rem;
+    color: #fff;
+    position: relative;
+    z-index: 10;
 }
 
-.footer-button {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: #fdbb2d; /* Акцентный цвет */
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 0.5rem;
-    width: 100%;
+.footer-content {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
     text-align: left;
-    border-radius: 6px;
-    transition: background 0.3s ease;
-    font-family: inherit; /* Наследуем шрифт страницы */
+}
+
+.footer-section {
+    min-width: 250px;
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+/* Красивые кнопки-аккордеоны в футере */
+.footer-button {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fdbb2d; /* Акцентный цвет */
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 1rem 1.2rem;
+    text-align: left;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(5px);
 }
 
 .footer-button:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(253, 187, 45, 0.1); /* Легкая подсветка золотым */
+    border-color: rgba(253, 187, 45, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-/* Список скрыт по умолчанию */
+.footer-button:active {
+    transform: translateY(0);
+}
+
+/* Добавляем иконку плюса (опционально) */
+.footer-button::after {
+    content: '+';
+    font-size: 1.2rem;
+    opacity: 0.7;
+    transition: transform 0.3s;
+}
+
+/* Список ссылок */
 .footer-content-list {
     display: none; 
     list-style: none;
-    padding: 0.5rem 0 0 1rem;
+    padding: 1rem 0.5rem 0.5rem 1rem;
+    animation: slideDown 0.3s ease-out;
+    border-left: 2px solid rgba(253, 187, 45, 0.2); /* Линия слева */
+    margin-left: 10px;
 }
 
-/* Класс для отображения списка */
+/* Анимация раскрытия */
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .footer-content-list.show {
     display: block; 
 }
 
 .footer-content-list li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
 }
 
-/* Стили ссылок внутри списка */
 .footer-content-list a {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
+    transition: color 0.2s;
+    display: inline-block;
 }
 
 .footer-content-list a:hover {
-    text-decoration: underline;
+    color: #fff;
+    text-decoration: none;
+    transform: translateX(5px); /* Сдвиг при наведении */
 }
 
-/* Для нумерованных списков литературы */
+/* Для нумерованных списков */
 ol.footer-content-list {
     list-style: decimal;
-    padding-left: 1.5rem;
+    padding-left: 2rem;
+}
+
+.copyright {
+    text-align: center;
+    opacity: 0.6;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.85rem;
 }
