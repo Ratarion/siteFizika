@@ -1,46 +1,91 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const nav = document.getElementById('chronologyNav');
     const yearsList = document.querySelector('.chronology-years');
-    if (!yearsList) return; // защита — если нет хронологии
+    
+    // Если элементов нет на странице, выходим
+    if (!nav || !yearsList) return;
 
-    const years = Array.from(document.querySelectorAll('.chronology-year'));
+    const buttons = Array.from(document.querySelectorAll('.chronology-year'));
     const slides = Array.from(document.querySelectorAll('.chronology-slide'));
+    
     let activeIndex = 0;
-    let wheelCooldown = false;
+    let isAnimating = false;
 
-    function setActive(index, opts = {}) {
+    function setActive(index) {
+        // Проверка границ
         if (index < 0) index = 0;
-        if (index >= slides.length) index = slides.length - 1;
-        if (index === activeIndex && !opts.force) return;
+        if (index >= buttons.length) index = buttons.length - 1;
+        
+        // Обновляем состояние
+        activeIndex = index;
 
-        slides.forEach(s => s.classList.toggle('active', Number(s.dataset.index) === index));
-        years.forEach(y => {
-            const i = Number(y.dataset.index);
-            y.classList.toggle('active', i === index);
-            y.setAttribute('aria-pressed', i === index);
+        // 1. Управление слайдами (текст слева)
+        slides.forEach(slide => {
+            const slideIndex = Number(slide.dataset.index);
+            if (slideIndex === index) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
         });
 
-        const activeBtn = years[index];
-        const itemCenter = activeBtn.offsetTop + (activeBtn.clientHeight / 2);
-        yearsList.style.transform = `translateY(calc(50% - ${itemCenter}px))`;
+        // 2. Управление кнопками (годы справа)
+        buttons.forEach(btn => {
+            const btnIndex = Number(btn.dataset.index);
+            if (btnIndex === index) {
+                btn.classList.add('active');
+                btn.setAttribute('aria-pressed', 'true');
+            } else {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-pressed', 'false');
+            }
+        });
 
-        activeIndex = index;
+        // 3. МАТЕМАТИКА ЦЕНТРИРОВАНИЯ
+        // Находим активную кнопку и её родителя li
+        const activeBtn = buttons[index];
+        const activeLi = activeBtn.parentElement; // Мы задали li фиксированную высоту в CSS
+        
+        // Высота всего контейнера (окна просмотра)
+        const navHeight = nav.clientHeight;
+        // Позиция активного элемента относительно начала списка
+        const itemTop = activeLi.offsetTop;
+        // Высота самого элемента
+        const itemHeight = activeLi.clientHeight;
+
+        // Формула: Сдвиг = (Пол-экрана) - (Положение элемента + Пол-элемента)
+        const translateVal = (navHeight / 2) - (itemTop + itemHeight / 2);
+
+        yearsList.style.transform = `translateY(${translateVal}px)`;
     }
 
-    years.forEach(btn => {
-        btn.addEventListener('click', () => setActive(Number(btn.dataset.index)));
-        btn.addEventListener('keydown', e => {
-            if (e.key === 'ArrowUp') { setActive(activeIndex - 1); e.preventDefault(); }
-            if (e.key === 'ArrowDown') { setActive(activeIndex + 1); e.preventDefault(); }
+    // Обработчики кликов
+    buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            setActive(Number(btn.dataset.index));
         });
     });
 
-    document.getElementById('chronologyNav')?.addEventListener('wheel', e => {
+    // Обработчик колесика мыши (Скролл)
+    nav.addEventListener('wheel', (e) => {
         e.preventDefault();
-        if (wheelCooldown) return;
-        wheelCooldown = true;
-        setTimeout(() => wheelCooldown = false, 80);
-        e.deltaY > 0 ? setActive(activeIndex + 1) : setActive(activeIndex - 1);
+        
+        if (isAnimating) return; // Защита от слишком быстрого скролла
+        isAnimating = true;
+        
+        setTimeout(() => { isAnimating = false; }, 100); // Небольшая задержка
+
+        if (e.deltaY > 0) {
+            setActive(activeIndex + 1); // Вниз
+        } else {
+            setActive(activeIndex - 1); // Вверх
+        }
     }, { passive: false });
 
-    setTimeout(() => setActive(0, { force: true }), 100);
+    // Инициализация (запуск первого кадра)
+    // Небольшая задержка, чтобы стили успели примениться и расчет высоты был верным
+    setTimeout(() => {
+        setActive(0);
+    }, 50);
 });

@@ -81,27 +81,5 @@
       </div>
     </footer>
   </div>
-  
-  <script>
-      // Intersection Observer для анимаций при скролле
-      const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                  entry.target.classList.add('visible');
-                  observer.unobserve(entry.target);
-              }
-          });
-      }, { threshold: 0.1 });
-
-      // Наблюдение за ВСЕМИ анимируемыми элементами
-      const elementsToAnimate = document.querySelectorAll(
-          '.index-page header, .subpage header, .project-note, .nav-button, section.card, .member-card, .tech-item'
-      );
-      
-      elementsToAnimate.forEach(element => {
-          observer.observe(element);
-      });
-  </script>
-
 </body>
 </html>
