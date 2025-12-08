@@ -5,11 +5,8 @@
         "**/.hg": true,
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
-        "proba": true,
         "vendor": true
     },
-    "hide-files.files": [
-        "proba"
-    ],
+    "hide-files.files": [],
     "liveServer.settings.port": 5501
 }

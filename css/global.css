@@ -78,3 +78,59 @@ footer {
     75%  { background-position: 0%   100%; }
     100% { background-position: 0%   50%; }
 }
+
+/* Стили для кнопок-аккордеонов в футере */
+.footer-section {
+    margin-bottom: 1rem;
+}
+
+.footer-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fdbb2d; /* Акцентный цвет */
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 100%;
+    text-align: left;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+    font-family: inherit; /* Наследуем шрифт страницы */
+}
+
+.footer-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Список скрыт по умолчанию */
+.footer-content-list {
+    display: none; 
+    list-style: none;
+    padding: 0.5rem 0 0 1rem;
+}
+
+/* Класс для отображения списка */
+.footer-content-list.show {
+    display: block; 
+}
+
+.footer-content-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* Стили ссылок внутри списка */
+.footer-content-list a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+}
+
+.footer-content-list a:hover {
+    text-decoration: underline;
+}
+
+/* Для нумерованных списков литературы */
+ol.footer-content-list {
+    list-style: decimal;
+    padding-left: 1.5rem;
+}

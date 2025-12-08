@@ -132,35 +132,35 @@
         <footer>
           <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Контакты</h3>
-                    <ul>
+                    <button class="footer-button" onclick="toggleFooterContent(this)">Контакты</button>
+                    <ul class="footer-content-list">
                         <li>✉️ Email: <a href="mailto:ratarionstas@gmail.com">ratarionstas@gmail.com</a></li>
                         <li>📞 Телефон: <a href="tel:+70000000000">8 (000) 000-00-00</a></li>
                         <li>📍 Адрес: г. Кемерово, ул. Весенняя, 28</li>
                     </ul>
                 </div>
-
+            
                 <div class="footer-section">
-                    <h3>Информация</h3>
-                    <ul>
+                    <button class="footer-button" onclick="toggleFooterContent(this)">Информация</button>
+                    <ul class="footer-content-list">
                         <li><a href="team.html">Наша команда</a></li>
                         <li><a href="research.html">Исследование</a></li>
                     </ul>
                 </div>
-
+            
                 <div class="footer-section">
-                    <h3>Полезные ссылки</h3>
-                    <ul>
+                    <button class="footer-button" onclick="toggleFooterContent(this)">Полезные ссылки</button>
+                    <ul class="footer-content-list">
                         <li><a href="project.html">О проекте</a></li>
                         <li><a href="https://kuzstu.ru">Университет</a></li>
                         <li><a href="technology.html">Наши технологии</a></li>
                     </ul>
                 </div>
             </div>
-
+        
             <div class="footer-section">
-              <h3 style="text-align: center;">Список литературы: Реактор БРЕСТ-ОД-300</h3>
-              <ol>
+              <button class="footer-button" onclick="toggleFooterContent(this)">Список литературы: Реактор БРЕСТ-ОД-300</button>
+              <ol class="footer-content-list">
                 <li id="ref-1">
                   <a href="https://www.rosatom.ru/journalist/news/v-severske-prodolzhaetsya-stroitelstvo-opytno-demonstratsionnogo-energeticheskogo-kompleksa-s-reaktorom-brest-od-300/"
                      target="_blank" rel="noopener">
@@ -203,7 +203,7 @@
                 </li>
               </ol>
             </div>
-            
+
             <div class="copyright" style="margin-top: 1.5rem;">
                 <p>© 2025 Проект "Прорыв" — концептуальная демонстрация. Не является техническим проектом. Все права защищены.</p>
             </div>
@@ -211,6 +211,8 @@
                 <p>Этот проект создан в образовательных целях для демонстрации возможностей замкнутого ядерного цикла и технологий будущего.</p>
             </div>
         </footer>
+        
+        <script src="js/footer.js"></script>
     </div>
 
 </body>

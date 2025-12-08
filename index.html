@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/features.css">
   <script src="js/animations.js" defer></script>
+  
   <style>
     /* Дополнительные стили для аккордеона в футере */
     .footer-section {
@@ -120,20 +121,7 @@
         <p>© 2025 Проект "Прорыв" — концептуальная демонстрация. Не является техническим проектом. Все права защищены.</p>
       </div>
     </footer>
+    <script src="js/footer.js"></script>
   </div>
-
-  <script>
-    // JavaScript для переключения видимости контента футера
-    function toggleFooterContent(button) {
-      const content = button.nextElementSibling;
-      if (content.classList.contains('show')) {
-        content.classList.remove('show');
-      } else {
-        // Закрываем все другие открытые секции (опционально, для аккордеон-эффекта)
-        document.querySelectorAll('.footer-content-list.show').forEach(el => el.classList.remove('show'));
-        content.classList.add('show');
-      }
-    }
-  </script>
 </body>
 </html>
