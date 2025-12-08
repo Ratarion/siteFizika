@@ -8,6 +8,46 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/features.css">
   <script src="js/animations.js" defer></script>
+  <style>
+    /* Дополнительные стили для аккордеона в футере */
+    .footer-section {
+      margin-bottom: 1rem;
+    }
+    .footer-button {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fdbb2d;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 0.5rem;
+      width: 100%;
+      text-align: left;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+    .footer-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .footer-content-list {
+      display: none; /* По умолчанию скрыто */
+      list-style: none;
+      padding: 0.5rem 0 0 1rem;
+    }
+    .footer-content-list.show {
+      display: block; /* Показываем при клике */
+    }
+    .footer-content-list li {
+      margin-bottom: 0.5rem;
+    }
+    .footer-content-list a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+    }
+    .footer-content-list a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 
 <body>
@@ -37,8 +77,8 @@
     <footer>
       <div class="footer-content">
         <div class="footer-section">
-          <h3>Контакты</h3>
-          <ul>
+          <button class="footer-button" onclick="toggleFooterContent(this)">Контакты</button>
+          <ul class="footer-content-list">
             <li>✉️ Email: <a href="mailto:ratarionstas@gmail.com">ratarionstas@gmail.com</a></li>
             <li>📞 Телефон: <a href="tel:+70000000000">8 (000) 000-00-00</a></li>
             <li>📍 Адрес: г. Кемерово, ул. Весенняя, 28</li>
@@ -46,17 +86,17 @@
           </ul>
         </div>
 
-            <div class="footer-section">
-            <h3>Информация</h3>
-            <ul>
-              <li><a href="team.html">Наша команда</a></li>
-              <li><a href="research.html">Исследование</a></li>
-            </ul>
+        <div class="footer-section">
+          <button class="footer-button" onclick="toggleFooterContent(this)">Информация</button>
+          <ul class="footer-content-list">
+            <li><a href="team.html">Наша команда</a></li>
+            <li><a href="research.html">Исследование</a></li>
+          </ul>
         </div>
 
         <div class="footer-section">
-          <h3>Список литературы</h3>
-          <ul>
+          <button class="footer-button" onclick="toggleFooterContent(this)">Список литературы</button>
+          <ul class="footer-content-list">
             <li><a href="https://rosatomnewsletter.com/ru/2024/05/29/systemic-approach-to-generation-iv/?ysclid=mhc7vevxt9642456392">Ядерные реакторы нового поколения</a></li>
             <li><a href="https://habr.com/ru/articles/388533/?ysclid=mhc7tts733194826421">Замкнутый ядерный цикл: теория и практика</a></li>
             <li><a href="https://chel.fpieco.ru/articles/vliyanie-atomnoj-energetiki-na-okruzhayushuyu-sredu-i-cheloveka/?ysclid=mhc7tdva5l364810381">Экологическая безопасность атомной энергетики</a></li>
@@ -67,8 +107,8 @@
         </div>
 
         <div class="footer-section">
-          <h3>Полезные ссылки</h3>
-          <ul>
+          <button class="footer-button" onclick="toggleFooterContent(this)">Полезные ссылки</button>
+          <ul class="footer-content-list">
             <li><a href="project.html">О проекте</a></li>
             <li><a href="https://kuzstu.ru">Университет</a></li>
             <li><a href="technology.html">Наши технологии</a></li>
@@ -81,5 +121,19 @@
       </div>
     </footer>
   </div>
+
+  <script>
+    // JavaScript для переключения видимости контента футера
+    function toggleFooterContent(button) {
+      const content = button.nextElementSibling;
+      if (content.classList.contains('show')) {
+        content.classList.remove('show');
+      } else {
+        // Закрываем все другие открытые секции (опционально, для аккордеон-эффекта)
+        document.querySelectorAll('.footer-content-list.show').forEach(el => el.classList.remove('show'));
+        content.classList.add('show');
+      }
+    }
+  </script>
 </body>
 </html>
